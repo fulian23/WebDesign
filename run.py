@@ -1,9 +1,12 @@
 from flask import Flask, render_template
 
 from app import routes
+
+from app.api import search
 app = Flask(__name__)
 
 app.register_blueprint(routes.test)
+app.register_blueprint(search.search)
 
 @app.route('/')
 def hello_world():
