@@ -1,18 +1,20 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_wtf.csrf import CSRFProtect
+
+
 
 from app import routes
 from app.api import search
-
-import asyncio
-from flask_wtf.csrf import CSRFProtect
 
 
 from db_config import Config
 from app.models import db, Users
 
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
 
 from app.forms import LoginForm
+
 
 
 
@@ -41,7 +43,7 @@ async def login():
     form = LoginForm()
     if form.validate_on_submit():  # 自动触发所有验证器
         user = db.session.query(Users).filter_by(username=form.username.data).first()
-        if user and user.password_hash == form.password.data:
+        if user and user.verify_password(form.password.data):
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
@@ -56,12 +58,15 @@ async def register():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
     form = LoginForm()
-    if form.validate_on_submit():  # 自动触发所有验证器
-        user = Users(username=form.username.data, password_hash=form.password.data)
+    if form.validate_on_submit():
+        if Users.query.filter_by(username=form.username.data).first():
+            flash('用户名已存在')
+            return redirect(url_for('register'))
+        user = Users(username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('login'))
     for field, errors in form.errors.items():
         for error in errors:
             flash(error)
