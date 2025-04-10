@@ -1,17 +1,12 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
-
-
 
 from app import routes
 from app.api import search
 
-
 from db_config import Config
 from app.models import db, Users
-
-
 
 from app.forms import LoginForm
 
@@ -21,7 +16,7 @@ from app.forms import LoginForm
 app = Flask(__name__)
 app.secret_key = 'test'
 csrf = CSRFProtect(app)
-app.register_blueprint(routes.test)
+app.register_blueprint(routes.news)
 app.register_blueprint(search.search)
 
 login_manager = LoginManager(app)
@@ -84,6 +79,10 @@ def logout():
 @login_required
 def dashboard():
     return render_template('dashboard.html', username=current_user.username)
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 
 if __name__ == '__main__':

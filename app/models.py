@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 class Users(db.Model,UserMixin):
-    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
@@ -22,6 +21,10 @@ class Users(db.Model,UserMixin):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Articles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.JSON, nullable=False)
 
 
 
