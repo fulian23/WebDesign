@@ -1,5 +1,11 @@
-import requests,re
+import requests,re, json
 import html
+from app.models import db,Articles
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from db_config import Config
+
 
 cookies = {
     'RK': 'D2UJ1Su71w',
@@ -27,24 +33,52 @@ headers = {
     # Requests sorts cookies= alphabetically
     # 'cookie': 'RK=D2UJ1Su71w; ptcz=d18e7d4917bff661087236e1d1610c39484b8f0a1685e28301b0b9d349fcb511; rewardsn=; wxtokenkey=777',
 }
-
-res = requests.get('https://mp.weixin.qq.com/s/8eZ1YQ0wqmyv2dpG0P8nmg', cookies=cookies, headers=headers)
+result={}
+url="https://mp.weixin.qq.com/s/C1jsAd9YpZeg0z42PVH-pw"
+res = requests.get(url, cookies=cookies, headers=headers)
 lis=[]
 # print(res.text)
-# all_p=re.findall(r'<(?:section|p)(.*?)(?:</section>|</p>)',res.text)
-all_p=re.findall(r'<p(.*?)</p>',res.text)
+all_p=re.findall(r'<(?:section|p)(.*?)(?:</section>|</p>)',res.text)
+with open('ISC.txt','w+',encoding='utf-8') as f:
+    f.write(res.text)
+# all_p=re.findall(r'<p(.*?)</p>',res.text)
+title=re.findall(r'<h1 class="rich_media_title " id="activity-name">\s*(.*?)\s*</h1>',res.text,re.S)[0]
+timestamp=re.findall(r"var oriCreateTime = '(.*?)';",res.text)[0]
+
 for p in all_p:
     img=re.findall(r'src="(.*?)"',p)
     if img:
-        print(img)
-        lis.append(img[0])
+        image=f"<img src='{img[0]}' referrerPolicy='no-referrer'>"
+        lis.append(image)
     text=''.join(re.findall(r'>(.*?)<',p))
     text=html.unescape(text)
     if text!='':
-        print(text)
         lis.append(text)
-print(lis)
-n=0
-for i in lis:
-    if i.startswith('http'):
-        n+=1
+result['title']=title
+result['content']=lis[1:-3]
+result['timestamp']=timestamp
+
+# result['content'] = [f"<img src='{img}' referrerPolicy='no-referrer'>" if img.startswith('http') else img for img in result['content']]
+r=json.loads(json.dumps(result, ensure_ascii=False))
+Base = declarative_base()
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+Session = sessionmaker(bind=engine)
+session = Session()
+try:
+    new_article = Articles(
+        title=title,
+        content=r,
+        timestamp=timestamp
+    )
+    # print(type(r))
+    session.add(new_article)
+    session.commit()
+    print(f"插入成功，ID: {new_article.id}")
+except Exception as e:
+    session.rollback()
+    print("插入失败:", str(e))
+finally:
+    session.close()
+
+
+

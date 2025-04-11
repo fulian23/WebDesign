@@ -1,0 +1,31 @@
+<form action="/news/search" method="GET">
+  <input type="text" name="q" value="{{ keyword }}" placeholder="搜索新闻标题">
+  <button type="submit">搜索</button>
+</form>
+
+{% if results %}
+  <div class="search-results">
+    {% for article in results %}
+      <div class="article">
+        <h3>{{ article.title }}</h3>
+{#        <p>{{ article.content.content|truncate(200) }}</p>#}
+        <small>{{ article.formatted_time.strftime("%Y-%m-%d %H:%M:%S") }}</small>
+      </div>
+    {% endfor %}
+
+    <!-- 分页导航 -->
+    <div class="pagination">
+      {% if pagination.has_prev %}
+        <a href="{{ url_for('news.search_articles', q=keyword, page=pagination.prev_num) }}">上一页</a>
+      {% endif %}
+
+      <span>第 {{ pagination.page }} 页 / 共 {{ pagination.pages }} 页</span>
+
+      {% if pagination.has_next %}
+        <a href="{{ url_for('news.search_articles', q=keyword, page=pagination.next_num) }}">下一页</a>
+      {% endif %}
+    </div>
+  </div>
+{% else %}
+  <p>未找到相关结果</p>
+{% endif %}

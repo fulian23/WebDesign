@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 db = SQLAlchemy()
 
 class Users(db.Model,UserMixin):
@@ -24,7 +25,12 @@ class Users(db.Model,UserMixin):
 
 class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.JSON, nullable=False)
+    timestamp = db.Column(db.Integer, nullable=False)
+    @property
+    def formatted_time(self):
+        return datetime.fromtimestamp(self.timestamp)
 
 
 
