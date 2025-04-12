@@ -34,13 +34,11 @@ headers = {
     # 'cookie': 'RK=D2UJ1Su71w; ptcz=d18e7d4917bff661087236e1d1610c39484b8f0a1685e28301b0b9d349fcb511; rewardsn=; wxtokenkey=777',
 }
 result={}
-url="https://mp.weixin.qq.com/s/C1jsAd9YpZeg0z42PVH-pw"
+url="https://mp.weixin.qq.com/s/6NoY3gb62GWWodNJtZZu3Q"
 res = requests.get(url, cookies=cookies, headers=headers)
 lis=[]
 # print(res.text)
 all_p=re.findall(r'<(?:section|p)(.*?)(?:</section>|</p>)',res.text)
-with open('ISC.txt','w+',encoding='utf-8') as f:
-    f.write(res.text)
 # all_p=re.findall(r'<p(.*?)</p>',res.text)
 title=re.findall(r'<h1 class="rich_media_title " id="activity-name">\s*(.*?)\s*</h1>',res.text,re.S)[0]
 timestamp=re.findall(r"var oriCreateTime = '(.*?)';",res.text)[0]

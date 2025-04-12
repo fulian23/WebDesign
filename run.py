@@ -15,7 +15,7 @@ from app.forms import LoginForm
 
 app = Flask(__name__)
 app.secret_key = 'test'
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 app.register_blueprint(routes.news)
 app.register_blueprint(search.search)
 

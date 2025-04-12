@@ -9,6 +9,7 @@ class Users(db.Model,UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
 
+
     @property
     def password(self):
         raise AttributeError('密码不可读')
@@ -28,9 +29,27 @@ class Articles(db.Model):
     title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.JSON, nullable=False)
     timestamp = db.Column(db.Integer, nullable=False)
+    comments = db.relationship('Comments', backref='article', lazy='select')
+
     @property
     def formatted_time(self):
         return datetime.fromtimestamp(self.timestamp)
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.Integer, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.id'), nullable=False)
+
+    commenter = db.relationship('Users', backref='comments')
+
+    @property
+    def formatted_time(self):
+        return datetime.fromtimestamp(self.timestamp)
+
+
+
 
 
 
