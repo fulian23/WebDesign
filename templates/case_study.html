@@ -1,10 +1,702 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国互联网大会 - 优秀案例展示</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 100%;
+        }
+
+        .header-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* 导航样式 */
+        nav {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-item {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #e6f2ff;
+            color: #0062cc;
+        }
+
+        .nav-item.active {
+            background-color: #0062cc;
+            color: white;
+        }
+
+        /* 主要内容样式 */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #0062cc;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0062cc, #0097ff);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 案例展示区域 */
+        .case-showcase {
+            margin-top: 40px;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .case-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .case-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .case-card:hover .case-image img {
+            transform: scale(1.05);
+        }
+
+        .case-content {
+            padding: 20px;
+        }
+
+        .case-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #0062cc;
+        }
+
+        .case-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .case-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .case-category {
+            font-size: 12px;
+            color: #0062cc;
+            background-color: #e6f2ff;
+            padding: 3px 10px;
+            border-radius: 15px;
+        }
+
+        .case-view-more {
+            color: #0062cc;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .case-view-more::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .case-view-more:hover::after {
+            transform: translateX(3px);
+        }
+
+        /* 分页导航 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .page-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: white;
+            color: #0062cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .page-item:hover {
+            background-color: #0062cc;
+            color: white;
+        }
+
+        .page-item.active {
+            background-color: #0062cc;
+            color: white;
+        }
+
+        /* 底部样式 */
+        footer {
+            background-color: #0062cc;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-item {
+                padding: 10px 15px;
+                margin: 5px;
+            }
+
+            .header-title {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-$END$
+    <header>
+        <div class="container">
+            <h1 class="header-title">中国互联网大会</h1>
+            <p class="header-subtitle">探索互联网未来，共享数字经济发展成果</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="nav-item active">首页</a>
+                <a href="#" class="nav-item">导航栏（不知道填啥）</a>
+                <a href="#" class="nav-item">导航栏（不知道填啥）</a>
+                <a href="#" class="nav-item">导航栏（不知道填啥）</a>
+                <a href="#" class="nav-item">导航栏（不知道填啥）</a>
+                <a href="#" class="nav-item">导航栏（不知道填啥）</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">优秀案例展示</h2>
+                <p class="section-subtitle">汇集各领域创新实践，展示互联网技术应用的最新成果与实践经验</p>
+            </div>
+
+            <div class="case-showcase">
+                <div class="case-grid" id="caseGrid">
+                    <!-- 案例内容将通过JavaScript动态加载 -->
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <a href="#" class="page-item active" data-page="1">1</a>
+                    <a href="#" class="page-item" data-page="2">2</a>
+                    <a href="#" class="page-item" data-page="3">3</a>
+                    <a href="#" class="page-item" data-page="4">4</a>
+                    <a href="#" class="page-item" data-page="5">5</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于大会</h3>
+                    <div class="footer-links">
+                        <a href="#">大会简介</a>
+                        <a href="#">组织架构</a>
+                        <a href="#">历史回顾</a>
+                        <a href="#">合作伙伴</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>参与方式</h3>
+                    <div class="footer-links">
+                        <a href="#">注册报名</a>
+                        <a href="#">赞助合作</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <div class="footer-links">
+                        <a href="#">电话：不知道写啥，占个位置吧</a>
+                        <a href="#">邮箱：不知道写啥，占个位置吧</a>
+                        <a href="#">地址：不知道写啥，占个位置吧</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2023 中国互联网大会 版权所有 | 京ICP备12345678号（乱编的）</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 案例数据
+        const caseData = [
+            // 第1页
+            {
+                title: "甲骨文数字化回归殷墟",
+                description: "通过三维建模、微痕增强等技术构建“甲骨文全信息模型”，实现全球甲骨文物的数字化永久保存与学术研究突破。",
+                image: "https://www.cssn.cn/skgz/bwyc/202307/W020230720312765436598.jpg",
+                link: "https://wwj.henan.gov.cn/2023/11-16/2848852.html",
+                category: "数字文化"
+            },
+            {
+                title: "数字敦煌",
+                description: "利用云计算、人工智能技术实现敦煌石窟的高精度数字化采集与全球共享，推动中华文化国际传播。",
+                image: "http://www.ncha.gov.cn/picture/0/2211082133331457287.png",
+                link: "http://www.ncha.gov.cn/art/2022/11/8/art_722_178063.html",
+                category: "数字文化"
+            },
+            {
+                title: "腾讯数字中轴项目",
+                description: "通过数字孪生技术复现北京中轴线历史场景，助力文化遗产保护与申遗。",
+                image: "https://inews.gtimg.com/om_bt/OZxhlb8vXIsYflLH7IlCYaDHboOyzaOAHZTv-DiGJ4f6oAA/1000",
+                link: "https://news.qq.com/rain/a/20240802A06WI500",
+                category: "数字文化"
+            },
+            {
+                title: "教育部全球教育数据库项目",
+                description: "整合全球教育数据资源，构建多语种教育研究平台，推动国际教育合作。",
+                image: "https://imgpolitics.gmw.cn/attachement/jpg/site2/20241119/00d86156b03428a6b4c504.jpg",
+                link: "https://www.gnust.edu.cn/info/1103/67112.htm",
+                category: "智慧教育"
+            },
+            {
+                title: "作业帮AI教育工具",
+                description: "通过AI技术实现作业智能批改、学情分析与个性化学习方案生成，覆盖超2亿用户。",
+                image: "https://www.xinhuanet.com/tech/20230719/03faf469361f4f46b48594d235543b67/2023071903faf469361f4f46b48594d235543b67_2023071990118542fc8a42a8925360620c3fc0dc.jpg",
+                link: "http://www.xinhuanet.com/tech/20230719/03faf469361f4f46b48594d235543b67/c.html",
+                category: "智慧教育"
+            },
+            {
+                title: "全球智慧教育大会",
+                description: "聚焦教育数字化转型，发布《在线学习中的个人数据和隐私保护手册》等成果。",
+                image: "https://news.bnu.edu.cn/images/2024-08/5eaa488edb9c4259ae4e3914c0d3dc9a.jpg",
+                link: "https://news.bnu.edu.cn/zx/ttgz/65fddd3612934c84b0ad1d7775efdaaf.htm",
+                category: "智慧教育"
+            },
+            // 第2页
+            {
+                title: "摩根大通区块链+供应链融资",
+                description: "利用区块链与零知识证明技术实现跨境供应链金融T+0清算，融资成本降低40%。",
+                image: "https://p26-sign.toutiaoimg.com/tos-cn-i-axegupay5k/7c7d96bf661649928458b1df466d0aaf~tplv-tt-origin-web:gif.jpeg?_iz=58558&from=article.pc_detail&lk3s=953192f4&x-expires=1745659204&x-signature=XGswQYraHYbSBziboo4hr2T%2BEs0%3D",
+                link: "http://m.toutiao.com/group/7489841854473601577/?upstream_biz=doubao",
+                category: "区块链金融"
+            },
+            {
+                title: "中国交建雄安项目区块链融资",
+                description: "全国首例区块链分包商融资业务，实现供应链金融穿透式管理。",
+                image: "https://q7.itc.cn/images01/20250418/63111735a8be4597b882bcb23702fba6.png",
+                link: "http://wap.sasac.gov.cn/n2588025/n2588124/c9175433/content.html",
+                category: "区块链金融"
+            },
+            {
+                title: "2021中国互联网大会跨境电商论坛",
+                description: "探讨跨境电商政策创新与人才培养，发布“2*48小时中国通达全球”物流体系。",
+                image: "https://www.isc.org.cn/resource/editor/attached/image/20210718/20210718145220_75826.jpg",
+                link: "https://www.isc.org.cn/article/40274.html",
+                category: "跨境电商"
+            },
+            {
+                title: "拼多多农业数字化",
+                description: "通过“农地云拼”模式推动农产品上行，2024年农产品交易额突破5000亿元。",
+                image: "https://www.xinhuanet.com/tech/20230306/9874c09670ef4f2b8b21bb60c5eac98a/202303069874c09670ef4f2b8b21bb60c5eac98a_202303060c0f919e2f304f1fba82497bd3a9edb0.png",
+                link: "https://www.xinhuanet.com/tech/20230306/9874c09670ef4f2b8b21bb60c5eac98a/c.html",
+                category: "跨境电商"
+            },
+            {
+                title: "雅安大数据产业园",
+                description: "国内首个“碳中和”绿色数据中心，支撑《流浪地球2》等影视渲染。",
+                image: "https://i2.chinanews.com.cn/simg/ypt/2023/231012/b535ea51-3325-43f3-b1d9-9579d8f3b873_zsite.jpg",
+                link: "https://www.chinanews.com.cn/cj/2023/10-12/10092887.shtml",
+                category: "绿色数据中心"
+            },
+            {
+                title: "全国智能制造示范工厂",
+                description: "培育421家国家级智能制造示范工厂，90%以上应用AI与数字孪生技术。",
+                image: "https://img.cinn.cn/a/10001/202404/873366f560cbe79340c2cd657b7f123e.jpeg",
+                link: "https://www.gov.cn/yaowen/liebiao/202411/content_6988583.htm",
+                category: "人工智能"
+            },
+            // 第3页
+            {
+                title: "华为RuralStar案例",
+                description: "为偏远地区提供低成本、易部署的无线通信解决方案，消除数字鸿沟。",
+                image: "https://www-file.huawei.com/-/media/corporate/images/news4/2021/q3/210926.jpg?la=zh",
+                link: "https://www.huawei.com/cn/news/2021/9/ruralstar-connects-together-cyberspace-award-2021",
+                category: "数字基础设施"
+            },
+            {
+                title: "通州会员企业获中国互联网创新大赛一等奖",
+                description: "以数据资产为核心，实现数据流转全流程监测与安全防护，提升复杂业务系统的数据安全管理质效。",
+                image: "https://www.isc.org.cn//profile//2024/07/12/61ebb5c1-cab7-40db-b1da-cb1747ba38c5.jpg",
+                link: "https://www.isc.org.cn/article/21402593669148672.html",
+                category: "数据安全"
+            },
+            {
+                title: "高校在首届“金灵光杯”中国互联网创新大赛中获奖",
+                description: "聚焦数字教育赛道，推动数据驱动的大规模因材施教，提升教学模式创新与新质生产力发展。",
+                image: "https://www.sdivc.edu.cn/__local/F/D1/93/2AD5DFEE33B94BBBC071612959C_5FE6A6A8_1B0B7.png",
+                link: "https://www.sdivc.edu.cn/info/1041/7362.htm",
+                category: "数字教育"
+            },
+            {
+                title: "中国移动“AI+行动计划”",
+                description: "通过AI技术赋能工业互联网，推动制造业数字化转型，提升生产效率与安全管理。",
+                image: "https://n.sinaimg.cn/sinakd20240627s/66/w1000h666/20240627/5bb2-ffc27649029308ca8a857a8abf16c598.png",
+                link: "https://finance.sina.com.cn/tech/roll/2024-06-27/doc-incaemyi9295162.shtml#:~:text=%E5%9C%A85%E6%9C%88%E4%BB%BD%E4%B8%BE%E5%8A%9E%E7%9A%84%E7%AC%AC%E4%B8%83%E5%B1%8A%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E5%BB%BA%E8%AE%BE%E5%B3%B0%E4%BC%9A%E6%9C%9F%E9%97%B4%EF%BC%8C%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8%E5%8F%91%E5%B8%83%E5%85%B7%E4%BD%93%E7%9A%84%E2%80%9CAI%2B%E2%80%9D%E8%A1%8C%E5%8A%A8%E8%AE%A1%E5%88%92%E5%86%85%E5%AE%B9%EF%BC%8C%E5%8C%85%E5%90%AB%E6%99%BA%E8%83%BD%E5%9F%BA%E5%BA%A7%E3%80%81%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E5%9C%B0%E5%92%8C%E2%80%9CAI%2B%E2%80%9D%E4%BA%A7%E5%93%81%E5%8F%8A%E5%BA%94%E7%94%A8%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E9%A2%86%E5%9F%9F%EF%BC%8C%E5%85%B7%E4%BD%93%E5%8C%85%E6%8B%AC%E2%80%9C%E4%B8%87%E5%8D%83%E7%99%BE%E2%80%9D%E6%99%BA%E8%83%BD%E5%9F%BA%E5%BA%A7%E3%80%81%E4%B8%89%E5%A4%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E5%9C%B0%E5%92%8C23%E6%AC%BEAI%2B%E4%BA%A7%E5%93%81%E5%8F%8A20%E4%B8%AAAI%2BDICT%E8%A1%8C%E4%B8%9A%E5%BA%94%E7%94%A8%E3%80%82,%E5%9C%A82024%20MWC%E4%B8%8A%E6%B5%B7%E7%9A%84%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2%E4%B8%AD%EF%BC%8C%E6%9D%A8%E6%9D%B0%E6%8F%90%E5%87%BA%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8%E5%B0%86%E5%A4%A7%E5%8A%9B%E6%8E%A8%E8%BF%9B%E2%80%9C%E4%B8%89%E4%B8%AA%E8%AE%A1%E5%88%92%E2%80%9D%EF%BC%8C%E5%B9%B6%E5%B0%86%E2%80%9CAI%2B%E2%80%9D%E8%A1%8C%E5%8A%A8%E8%AE%A1%E5%88%92%E6%94%BE%E5%9C%A8%E4%BA%86%E9%A6%96%E4%BD%8D%EF%BC%8C%E4%BB%8E%E5%AE%8F%E8%A7%82%E6%88%98%E7%95%A5%E5%B1%82%E9%9D%A2%E5%AF%B9%E2%80%9CAI%2B%E2%80%9D%E8%A1%8C%E5%8A%A8%E8%BF%9B%E8%A1%8C%E4%BA%86%E9%83%A8%E7%BD%B2%E3%80%82",
+                category: "人工智能"
+            },
+            {
+                title: "拼多多“高质量发展与新质生产力”",
+                description: "分享电商平台在农业数字化、供应链优化等领域的实践经验。",
+                image: "https://www.isc.org.cn//profile//2024/07/10/846b7919-e585-4408-a8a2-9242e364835a.jpg",
+                link: "https://www.isc.org.cn/article/21380049838403584.html",
+                category: "数字贸易"
+            },
+            {
+                title: "科技引领，联通全球：大数据与人工智能在反诈治理中的新实践",
+                description: "利用AI外呼系统提升反诈劝阻效率，构建“事前-事中-事后”全流程治理体系。",
+                image: "https://imgpolitics.gmw.cn/attachement/jpg/site2/20241119/00d86156b03428a6b84817.jpg",
+                link: "https://politics.gmw.cn/2024-11/19/content_37686679.htm",
+                category: "数字治理"
+            },
+            // 第4页
+            {
+                title: "2Africa国际海缆项目",
+                description: "构筑环非信息高速公路，推动非洲数字经济发展。",
+                image: "https://n.sinaimg.cn/spider2020514/632/w1428h804/20200514/ba20-itriatr8618030.jpg",
+                link: "https://tech.sina.com.cn/roll/2020-05-14/doc-iirczymk1555721.shtml",
+                category: "国际合作"
+            },
+            {
+                title: "快手“可灵AI”平台",
+                description: "基于自研大模型生成高质量视频与图像，赋能内容创作。",
+                image: "https://inews.gtimg.com/news_bt/OioEoNydJT-2vijXyviuVSa1ZnaJ0anPBm8QpQvRESXKcAA/641",
+                link: "https://news.qq.com/rain/a/20250415A080PT00",
+                category: "内容创作"
+            },
+            {
+                title: "数字经济与农业融合",
+                description: "农业数字化解决方案数量显著提升，覆盖种植、养殖、物流等全链条。",
+                image: "https://www.isc.org.cn//profile//2023/07/21/94a72a4e-468d-4e2c-ab6c-15fddd6ffecd.jpg",
+                link: "https://www.isc.org.cn/mobile/article/17359313814810624.html",
+                category: "数字农业"
+            },
+            {
+                title: "工业互联网平台",
+                description: "工业数字化解决方案初具规模，推动制造业提质增效。",
+                image: "http://www.qstheory.cn/dukan/qs/2024-12/01/1130224011_17328444244271n.jpg",
+                link: "http://www.qstheory.cn/dukan/qs/2024-12/01/c_1130224011.htm",
+                category: "工业互联网"
+            },
+            {
+                title: "大同中联绿色大数据基地",
+                description: "采用国际先进节能技术，入选“2024年度数据中心实施样板项目”。",
+                image: "https://www.zlhuiyun.com/uploads/allimg/20240412/f5f016256a5841788eb3f98323fdaae9.png",
+                link: "http://www.dt.gov.cn/dtszf/zsxm/202504/78e8b22d2c6d4e399eab2d445c633a26.shtml",
+                category: "绿色数据中心"
+            },
+            {
+                title: "数智融合潮涌 共绘发展新篇——2025年世界互联网大会亚太峰会观察",
+                description: "分析AI、算力网络在亚太地区的应用趋势。",
+                image: "https://www.xinhuanet.com/20250416/69f1912ba47e429a965167f26e9b9c31/JzbO1J2fJGJB00tY.jpg",
+                link: "http://www.xinhuanet.com/20250416/69f1912ba47e429a965167f26e9b9c31/c.html",
+                category: "数智融合"
+            },
+            // 第5页
+            {
+                title: "乘“数”而上，共享创新发展成果",
+                description: "解读数字技术在医疗、教育、养老等民生领域的应用。",
+                image: "https://epaper.gmw.cn/gmrb/images/2024-11/22/07/res0715_attpic_brief.jpg",
+                link: "https://epaper.gmw.cn/gmrb/html/2024-11/22/nw.D110000gmrb_20241122_1-07.htm",
+                category: "数字民生"
+            },
+            {
+                title: "中国互联网协会年度报告",
+                description: "汇总数字化转型优秀案例，覆盖数字经济、数字政务、数字社会等领域。",
+                image: "https://www.isc.org.cn//profile//2024/07/01/8155f2ba-bd38-4fbc-85bc-e82508e4f0e8.jpg",
+                link: "https://www.isc.org.cn/article/21276709814923264.html",
+                category: "行业报告"
+            },
+            {
+                title: "数据安全一体化监测预警系统",
+                description: "以数据资产为核心，实现数据流转全流程监测与安全防护，提升复杂业务系统的数据安全管理质效。",
+                image: "https://www.mchz.com.cn/public/upload/spectacle/2023/10-25/2cb5899086e24817514c0ae88eb0e9e9.png",
+                link: "https://www.zhongfu.net/products/info/161.html",
+                category: "数据安全"
+            },
+            {
+                title: "中国平安数字金融创新",
+                description: "分享AI风控与数字金融创新实践，覆盖超1亿企业。",
+                image: "https://xqimg.imedao.com/195cd1c3a7af19203fec86cb.jpg!800.jpg",
+                link: "http://m.toutiao.com/group/7493720774101139983/?upstream_biz=doubao",
+                category: "数字金融"
+            }
+        ];
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            const caseGrid = document.getElementById('caseGrid');
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 6;
+            let currentPage = 1;
+
+            // 加载案例内容
+            function loadCases(page) {
+                caseGrid.innerHTML = '';
+                const startIndex = (page - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, caseData.length);
+
+                for (let i = startIndex; i < endIndex; i++) {
+                    const caseItem = caseData[i];
+                    if (caseItem) {
+                        const caseCard = document.createElement('div');
+                        caseCard.className = 'case-card';
+
+                        caseCard.innerHTML = `
+                            <div class="case-image">
+                                <img src="${caseItem.image}" alt="${caseItem.title}" />
+                            </div>
+                            <div class="case-content">
+                                <h3 class="case-title">${caseItem.title}</h3>
+                                <p class="case-description">${caseItem.description}</p>
+                                <div class="case-footer">
+                                    <span class="case-category">${caseItem.category}</span>
+                                    <a href="${caseItem.link}" class="case-view-more" target="_blank">查看详情</a>
+                                </div>
+                            </div>
+                        `;
+
+                        caseGrid.appendChild(caseCard);
+                    }
+                }
+
+                // 更新分页项状态
+                const pageItems = pagination.querySelectorAll('.page-item');
+                pageItems.forEach(item => {
+                    if (parseInt(item.dataset.page) === page) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            // 初始化加载第1页
+            loadCases(1);
+
+            // 分页交互
+            pagination.addEventListener('click', function(e) {
+                if (e.target.classList.contains('page-item') && !e.target.classList.contains('active')) {
+                    currentPage = parseInt(e.target.dataset.page);
+                    loadCases(currentPage);
+                }
+            });
+
+            // 导航栏交互
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
