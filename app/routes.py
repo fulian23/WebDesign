@@ -7,9 +7,6 @@ import time
 
 news = Blueprint('news', __name__, url_prefix='/news')
 
-def timestamp_format(t):
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(t)))
-
 
 @news.route('/search')
 def search_articles():

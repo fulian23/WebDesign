@@ -29,9 +29,7 @@ headers = {
     'sec-fetch-site': 'cross-site',
     'sec-fetch-user': '?1',
     'upgrade-insecure-requests': '1',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
-    # Requests sorts cookies= alphabetically
-    # 'cookie': 'RK=D2UJ1Su71w; ptcz=d18e7d4917bff661087236e1d1610c39484b8f0a1685e28301b0b9d349fcb511; rewardsn=; wxtokenkey=777',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36'
 }
 result={}
 url="https://mp.weixin.qq.com/s/6NoY3gb62GWWodNJtZZu3Q"
