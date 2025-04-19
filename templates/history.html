@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>互联网大会</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(200deg, #fff, #dfe9f3);
+    }
+
+   .shell {
+      width: 100%;
+      position: relative;
+      padding: 80px 0;
+      transition: 0.3s ease 0s;
+      background-attachment: fixed;
+      background-size: cover;
+      padding-top: 50px;
+    }
+
+   .shell::before {
+      position: absolute;
+      left: 0%;
+      top: 0%;
+      width: 100%;
+      height: 100%;
+      background: rgba(rgb(41, 10, 243), rgb(46, 3, 164), rgb(6, 6, 113), alpha);
+      content: "";
+    }
+
+   .header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 80px;
+      position: relative;
+    }
+
+   .title {
+      color: white;
+      font-size: 88px;
+      font-weight: normal;
+      margin: 0;
+    }
+
+   .timeline {
+      display: flex;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      max-width: 1000px;
+      position: relative;
+    }
+
+   .content-title {
+      font-weight: normal;
+      font-size: 40px;
+      margin: -10px 0 0 0;
+      transition: 0.4s;
+      padding: 0 10px;
+      box-sizing: border-box;
+      color: rgba(240, 232, 232, 0.925);
+    }
+
+   .timeline::before {
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      margin-left: -1px;
+      content: "";
+      background: rgba(rgb(10, 10, 239), rgb(9, 32, 176), rgb(4, 4, 123), alpha);
+    }
+
+   .item {
+      padding: 80px 0;
+      opacity: 0.3;
+      filter: blur(2px);
+      transition: 0.5s;
+      box-sizing: border-box;
+      width: calc(50% - 40px);
+      display: flex;
+      position: relative;
+      transform: translateY(-80px);
+    }
+
+   .item::before {
+      content: attr(data-text);
+      letter-spacing: 3px;
+      width: 100%;
+      position: absolute;
+      color: hsla(0, 11%, 89%, 0.904);
+      font-size: 35px;
+      border-left: 2px solid rgba(240, 230, 230, 0.895);
+      top: 70%;
+      margin-top: 150px;
+      padding-left: 15px;
+      opacity: 0;
+      right: calc(-100% - 56px);
+      font: 900 20px;
+      letter-spacing: 5px;
+    }
+
+   .item:nth-child(even) {
+      align-self: flex-end;
+    }
+
+   .item:nth-child(even)::before {
+      right: auto;
+      text-align: right;
+      left: calc(-100% - 56px);
+      padding-left: 0;
+      border-left: none;
+      border-right: 2px solid rgba(255, 255, 255, 0.5);
+      padding-right: 15px;
+    }
+
+   .item--active {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
+   .item--active::before {
+      top: 40%;
+      transition: 0.3s all 0.2s;
+      opacity: 1;
+    }
+
+   .item--active.content-title {
+      margin: -60px 0 20px 0;
+    }
+
+   .img {
+      max-width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+   .subtitle {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 52px;
+      letter-spacing: 5px;
+      margin: 10px 0 0 0;
+      font-weight: normal;
+    }
+
+   .footer {
+      padding: 95px 0;
+      text-align: center;
+    }
+
+   .footer a {
+      color: hsla(0, 80%, 2%, 0.919);
+      display: inline-block;
+    }
+
+    @media only screen and (max-width: 767px) {
+       .item {
+          align-self: baseline !important;
+          width: 100%;
+          padding: 0 30px 150px 80px;
+        }
+
+       .item::before {
+          left: 10px !important;
+          padding: 0 !important;
+          top: 50px;
+          text-align: center !important;
+          width: 60px;
+          border: none !important;
+        }
+
+       .item:last-child {
+          padding-bottom: 40px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+       .timeline::before {
+          left: 40px;
+        }
+    }
+  </style>
+</head>
+
+<body>
+ 
+  <div class="shell" id="shell">
+    <div class="header">
+      <h2 class="title"> 互联网大会 </h2>
+      <span class="subtitle">发展历程</span>
+    </div>
+    <div class="timeline">
+      <div class="item" data-text="2002年
+                                    上海">
+        <div class="content">
+          <img src="./images/1.jpg" alt="" class="img">
+          <h2 class="content-title"></h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2003年
+                                    北京">
+        <div class="content">
+          <img src="./images/222.jpg" alt="" class="img">
+          <h2 class="content-title">透视互联网,迈向e时代</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2004年
+                                    北京">
+        <div class="content">
+          <img src="./images/3.jpg" alt="" class="img">
+          <h2 class="content-title"></h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2005年">
+        <div class="content">
+          <img src="./images/4.jpg" alt="" class="img">
+          <h2 class="content-title">拓展区域合作，把握产业机遇</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2006年
+                                    北京">
+        <div class="content">
+          <img src="./images/5.jpg" alt="" class="img">
+          <h2 class="content-title">   创新-互联网带来的机遇</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2007年北京">
+        <div class="content">
+          <img src="./images/6.jpg" alt="" class="img">
+          <h2 class="content-title">和谐网络，品质服务</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2008年江苏-南京">
+        <div class="content">
+          <img src="./images/7.jpg" alt="" class="img">
+          <h2 class="content-title">融合促进发展，渗透创造价值</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2009年北京">
+        <div class="content">
+          <img src="./images/8.jpg" alt="" class="img">
+          <h2 class="content-title"> 危机·转机·契机 --金融危机下的中国互联网力量与信心</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2010年北京">
+        <div class="content">
+          <img src="./images/9.jpg" alt="" class="img">
+          <h2 class="content-title">服务-网络价值之本；
+            绿色-网络发展之道
+          </h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2011年北京">
+        <div class="content">
+          <img src="./images/10.jpg" alt="" class="img">
+          <h2 class="content-title">网络中国-责任与活力</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2012年北京">
+        <div class="content">
+          <img src="./images/11.jpg" alt="" class="img">
+          <h2 class="content-title">开放·诚信·融合-迎接移动互联新时代</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2013年北京">
+        <div class="content">
+          <img src="./images/12.jpg" alt="" class="img">
+          <h2 class="content-title">共建良好生态环境，服务美好网络生活</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2014年北京">
+        <div class="content">
+          <img src="./images/13.jpg" alt="" class="img">
+          <h2 class="content-title">创造无限机会-打造新时代经济引擎</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2015年北京">
+        <div class="content">
+          <img src="./images/14.jpg" alt="" class="img">
+          <h2 class="content-title">开启互联网+新生态</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2016年北京">
+        <div class="content">
+          <img src="./images/15.jpg" alt="" class="img">
+          <h2 class="content-title">繁荣网络经济，建设网络强国</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2017年北京">
+        <div class="content">
+          <img src="./images/16.jpg" alt="" class="img">
+          <h2 class="content-title">广连接·新活力·融实业</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2018年北京">
+        <div class="content">
+          <img src="./images/17.jpg" alt="" class="img">
+          <h2 class="content-title">融合发展，协同共治--新时代 新征程 新动能</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2019年北京">
+        <div class="content">
+          <img src="./images/18.jpg" alt="" class="img">
+          <h2 class="content-title"></h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2020年云端">
+        <div class="content">
+          <img src="./images/19.jpg" alt="" class="img">
+          <h2 class="content-title">共迎网络新时代，共创产业新未来</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2021年北京">
+        <div class="content">
+          <img src="./images/20.jpg" alt="" class="img">
+          <h2 class="content-title">新阶段、新理念、新格局--互联网引领数字经济新发展</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2022年深圳">
+        <div class="content">
+          <img src="./images/21.jpg" alt="" class="img">
+          <h2 class="content-title">发展数字经济，促进数字文明</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2023年北京">
+        <div class="content">
+          <img src="./images/22.jpg" alt="" class="img">
+          <h2 class="content-title">促进数字融合，赋能千行百业</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+      <div class="item" data-text="2024年北京">
+        <div class="content">
+          <img src="./images/23.jpg" alt="" class="img">
+          <h2 class="content-title">互联三十载，智汇新质变</h2>
+          <p class="content-desc">
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+    (function ($) {
+      $.fn.timeline = function () {
+        var selectors = {
+          id: $(this),
+          item: $(this).find(".item"),
+          activeClass: "item--active",
+          img: ".img"
+        };
+        selectors.item.eq(0).addClass(selectors.activeClass);
+        selectors.id.css(
+          "background-image",
+          "url(" +
+          selectors.item.first()
+           .find(selectors.img)
+           .attr("src") + ")"
+        );
+        var itemlength = selectors.item.length;
+        $(window).scroll(function () {
+          var max, min;
+          var pos = $(this).scrollTop();
+          selectors.item.each(function (i) {
+            min = $(this).offset().top;
+            max = $(this).height() + $(this).offset().top;
+            var that = $(this);
+            if (pos <= max - 10 && pos >= min) {
+              selectors.id.css(
+                "background-image",
+                "url(" +
+                that.find(selectors.img)
+                 .attr("src") +
+                ")"
+              );
+              selectors.item.removeClass(selectors.activeClass);
+              $(this).addClass(selectors.activeClass);
+            }
+          });
+        });
+      };
+    })(jQuery);
+    $("#shell").timeline();
+
+    function autoScroll() {
+      const timelineContainer = document.getElementById('shell');
+      const itemHeight = document.querySelector('.item').offsetHeight;
+      let currentScroll = timelineContainer.scrollTop;
+      currentScroll += 1; 
+      timelineContainer.scrollTop = currentScroll;
+      if (currentScroll % itemHeight === 0) {
+        setTimeout(autoScroll, 2000); 
+      } else {
+        setTimeout(autoScroll, 10); 
+      }
+    }
+    autoScroll();
+  </script>
+</body>
+
+</html>    

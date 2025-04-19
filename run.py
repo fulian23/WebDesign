@@ -16,7 +16,7 @@ def hello_world():
 @app.route('/test')
 def test():
     data={} #这里填需要的测试数据
-    return render_template('test.html',data=data)
+    return render_template('history.html',data=data)
 
 
 if __name__ == '__main__':

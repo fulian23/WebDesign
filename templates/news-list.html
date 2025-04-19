@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024新闻资讯</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 标题样式 */
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #007BFF;
+            color: white;
+            width: 100%;
+            font-size: 2.5rem;
+        }
+
+        /* 新闻容器样式 */
+       .news-container {
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        /* 新闻列表样式 */
+       .news-list {
+            display: flex;
+            width: 10000px; /* 足够大以容纳所有新闻 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 新闻项样式 */
+       .news-item {
+            width: 300px;
+            min-height: 200px;
+            margin: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+       .news-item:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+       .news-item img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+       .news-item img:hover {
+            transform: scale(1.05);
+        }
+
+       .news-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+       .news-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* 滑动控制按钮样式 */
+       .prev-button,
+       .next-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+       .prev-button {
+            left: 10px;
+        }
+
+       .next-button {
+            right: 10px;
+        }
+
+        /* 新增：底部新闻区样式 */
+       .bottom-news-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+       .bottom-news-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+
+       .bottom-news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+       .bottom-news-title {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+       .bottom-news-title:hover {
+            color: #007BFF;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>新闻资讯</h1>
+    <!-- 新闻容器 -->
+    <div class="news-container">
+        <!-- 新闻列表 -->
+        <div class="news-list">
+            <!-- 新闻项1 -->
+            <div class="news-item">
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 智慧教育论坛在京举办</h3>
+                <p>2024-07-12 09:35:09</p>
+            </div>
+            <!-- 新闻项2 -->
+            <div class="news-item">
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 互联网新质创新发展论坛在京举办</h3>
+                <p>2024-07-12 09:34:48</p>
+            </div>
+            <!-- 新闻项3 -->
+            <div class="news-item">0
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 拼多多朱政：坚持高质量发展 构筑新质生产力</h3>
+                <p>2024-07-11 09:05:13</p>
+            </div>
+            <!-- 新闻项4 -->
+            <div class="news-item">
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 中国移动副总经理张冬：建设智能互联网 发展新质生产力</h3>
+                <p>2024-07-11 09:03:55</p>
+            </div>
+            <!-- 新闻项5 -->
+            <div class="news-item">
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 奇安信齐向东：以AI驱动安全 全力护航互联网新质变</h3>
+                <p>2024-07-11 09:04:54</p>
+            </div>
+            <!-- 新闻项6 -->
+            <div class="news-item">
+                <img src="./images/23.jpg" alt="新闻图片">
+                <h3>2024中国互联网大会 | 360周鸿祎：没有互联网的发展 就没有人工智能发展</h3>
+                <p>2024-07-11 09:05:31</p>
+            </div>
+        </div>
+        <!-- 滑动控制按钮 -->
+        <button class="prev-button" onclick="prevNews()">&#10094;</button>
+        <button class="next-button" onclick="nextNews()">&#10095;</button>
+    </div>
+
+    <!-- 新增：底部新闻区 -->
+    <div class="bottom-news-section">
+        <div class="bottom-news-item">
+            <div class="bottom-news-date">07-12 2024</div>
+            <a href="text1.html" class="bottom-news-title">2024（第二十三届）中国互联网大会圆满闭幕</a>
+        </div>
+        <div class="bottom-news-item">
+            <div class="bottom-news-date">07-12 2024</div>
+            <a href="#" class="bottom-news-title">中国互联网协会、中国信息通信研究院共同发布《互联网信息服务算法推荐合规自律公约》</a>
+        </div>
+        <div class="bottom-news-item">
+            <div class="bottom-news-date">07-12 2024</div>
+            <a href="#" class="bottom-news-title">2024中国互联网大会丨滴滴胡成：移动互联网让出行更美好</a>
+        </div>
+    </div>
+
+    <script>
+        const newsList = document.querySelector('.news-list');
+        const newsItems = document.querySelectorAll('.news-item');
+        const itemWidth = newsItems[0].offsetWidth + 20; // 加上间距
+        let currentIndex = 0;
+
+        function prevNews() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateNewsList();
+            }
+        }
+
+        function nextNews() {
+            if (currentIndex < newsItems.length - 1) {
+                currentIndex++;
+                updateNewsList();
+            }
+        }
+
+        function updateNewsList() {
+            const translateX = -currentIndex * itemWidth;
+            newsList.style.transform = `translateX(${translateX}px)`;
+        }
+    </script>
+</body>
+
+</html>
