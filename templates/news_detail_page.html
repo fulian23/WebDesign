@@ -1,0 +1,44 @@
+<!-- 文章标题和内容 -->
+<h1>{{ article.title }}</h1>
+
+{% for p in article.content.content %}
+  <p>
+    {{ p|safe }}
+  </p>
+{% endfor %}
+
+<!-- 评论表单 -->
+{% if current_user.is_authenticated %}
+  <form method="POST" action="{{ url_for('news.post_comment', news_id=article.id) }}">
+    <textarea name="content" rows="3" cols="80" placeholder="输入评论内容..." required></textarea>
+    <br>
+    <button type="submit">提交评论</button>
+  </form>
+{% else %}
+  <p>[请先<a href="{{ url_for('login') }}">登录</a>后评论]</p>
+{% endif %}
+
+<!-- 评论列表 -->
+<h3>评论（{{ pagination.total }}条）</h3>
+{% for comment in comments %}
+  <div style="margin: 10px 0; padding: 5px; border-bottom: 1px solid #eee;">
+    <div>
+      <strong>{{ comment.commenter.username }}</strong>
+      <span style="color: #666;">{{ comment.formatted_time.strftime('%Y-%m-%d %H:%M') }}</span>
+    </div>
+    <p>{{ comment.content }}</p>
+  </div>
+{% endfor %}
+
+<!-- 分页 -->
+<div>
+  {% if pagination.has_prev %}
+    <a href="{{ url_for('article_detail', news_id=article.id, page=pagination.prev_num) }}">上一页</a>
+  {% endif %}
+
+  <span>第 {{ pagination.page }} 页</span>
+
+  {% if pagination.has_next %}
+    <a href="{{ url_for('article_detail', news_id=article.id, page=pagination.next_num) }}">下一页</a>
+  {% endif %}
+</div>
