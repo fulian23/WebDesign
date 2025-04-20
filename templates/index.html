@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="中国互联网大会官方网站 - 推动数字中国建设，引领智能时代发展">
+    <title>ISC 2025 会议网站</title>
+    <!-- 加载Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 加载字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 加载本地样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- 初始全屏黑色背景 -->
+    <div class="initial-screen" id="initialScreen">
+        <h1 class="initial-title">中国互联网大会</h1>
+    </div>
+
+    <!-- 网站标题 -->
+    <header class="site-title" role="banner">
+        <h1>中国互联网大会</h1>
+    </header>
+
+    <!-- 大背景 -->
+    <div class="hero-background" role="img" aria-label="中国互联网大会背景图">
+        <div class="hero-content">
+            <h2 class="text-5xl font-bold mb-4">欢迎来到中国互联网大会</h2>
+            <p class="text-xl mb-6">推动数字中国建设，引领智能时代发展</p>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="text-white py-4" role="navigation" aria-label="主导航">
+        <div class="container mx-auto flex justify-center items-center">
+            <ul class="flex" role="menubar">
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem" aria-current="page">主页</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">优秀案例</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">时间历程</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">大会新闻</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">用户</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="container mx-auto py-8 px-4" role="main">
+        <section class="text-center">
+            <div class="title-section">
+                <h2 id="introduction">简要介绍</h2>
+            </div>
+        </section>
+        <section class="section introduction-section" aria-labelledby="introduction">
+            <div class="intro-container">
+                <div class="intro-left">
+                    <div class="intro-text">
+                        <p class="highlight-text">"中国互联网大会"是中国最早的互联网行业盛会之一，自2002年创办以来，以前沿视角洞察产业趋势，以开放精神汇聚行业智慧。</p>
+                        <p class="text-gray-700">大会致力于提供权威、高效的行业交流平台，汇聚政产学研用金百余位嘉宾、千余家单位，展示成果、碰撞思想、寻找机会、推动合作，与众多互联网人守望相助、共同成长。</p>
+                        <p class="text-gray-700">2024（第二十三届）中国互联网大会定于7月9日至11日在北京召开。本届大会以"会、展、赛、特色活动"为主线，聚焦人工智能、工业互联网、数据要素等热点领域。</p>
+                        <p class="text-gray-700">作为中国互联网行业的"思想灯塔"，中国互联网大会始终站在时代前沿，以敏锐的洞察力和前瞻性的视野，引领行业发展方向。在人工智能、大数据、区块链等新兴技术领域，大会不仅预判未来趋势，更通过深度研讨和实践案例分享，为企业指明发展方向。</p>
+                        <p class="text-gray-700">在数据安全、隐私保护等关键领域，大会率先布局，推动行业标准制定，让中国互联网行业在全球竞争中掌握话语权。通过持续的思想碰撞和智慧分享，大会已成为推动中国互联网创新发展的重要力量。</p>
+                    </div>
+                </div>
+                <div class="intro-right">
+                    <div class="intro-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-number">23</span>
+                            <span class="highlight-label">年行业积淀</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">100+</span>
+                            <span class="highlight-label">位重磅嘉宾</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">1000+</span>
+                            <span class="highlight-label">家企业参与</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">50+</span>
+                            <span class="highlight-label">场专题论坛</span>
+                        </div>
+                    </div>
+                    <div class="intro-features">
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>初心使命</h3>
+                            <p>中国最早的互联网行业盛会，见证中国互联网从筚路蓝缕到气象繁华</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🌟</div>
+                            <h3>核心价值</h3>
+                            <p>汇聚政产学研用金百余位嘉宾，打造权威高效的行业交流平台</p>
+                        </div>
+                    </div>
+                    <div class="intro-tags">
+                        <span class="tag">人工智能</span>
+                        <span class="tag">工业互联网</span>
+                        <span class="tag">数据要素</span>
+                        <span class="tag">算力</span>
+                        <span class="tag">数字政府</span>
+                        <span class="tag">智慧教育</span>
+                        <span class="tag">数据安全</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center">
+            <div class="title-section">
+                <h2 id="timeline">成立历经时间</h2>
+            </div>
+        </section>
+        <div class="timeline" role="list" aria-labelledby="timeline">
+            <div class="timeline-item left" role="listitem">
+                <span class="timeline-date">2002年5月18日</span>
+                <div class="timeline-content">
+                    <p>中国互联网大会首次创办，开启行业交流新篇章。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2002年图片" loading="lazy" width="200" height="150">
+            </div>
+            <div class="timeline-item right" role="listitem">
+                <span class="timeline-date">2005年6月20日</span>
+                <div class="timeline-content">
+                    <p>大会聚焦互联网创新应用，推动行业技术发展。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2005年图片" loading="lazy" width="200" height="150">
+            </div>
+            <div class="timeline-item left" role="listitem">
+                <span class="timeline-date">2010年7月22日</span>
+                <div class="timeline-content">
+                    <p>引入移动互联网相关议题，顺应行业发展趋势。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2010年图片" loading="lazy" width="200" height="150">
+            </div>
+            <div class="timeline-item right" role="listitem">
+                <span class="timeline-date">2015年8月25日</span>
+                <div class="timeline-content">
+                    <p>大会规模进一步扩大，吸引众多国际嘉宾参与。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2015年图片" loading="lazy" width="200" height="150">
+            </div>
+            <div class="timeline-item left" role="listitem">
+                <span class="timeline-date">2020年9月28日</span>
+                <div class="timeline-content">
+                    <p>增加线上会议形式，适应数字化发展需求。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2020年图片" loading="lazy" width="200" height="150">
+            </div>
+            <div class="timeline-item right" role="listitem">
+                <span class="timeline-date">2024年7月9日</span>
+                <div class="timeline-content">
+                    <p>以"会、展、赛、特色活动"为主线，聚焦多领域热点。</p>
+                </div>
+                <img src="https://picsum.photos/200/150" alt="2024年图片" loading="lazy" width="200" height="150">
+            </div>
+        </div>
+
+        <section class="text-center">
+            <div class="title-section">
+                <h2 id="contributions">杰出贡献</h2>
+            </div>
+        </section>
+        <section class="section" aria-labelledby="contributions">
+            <div class="poker-cards-container">
+                <div class="poker-card" style="--card-index: 0">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-corner top-left">
+                                <span class="card-value">A</span>
+                                <span class="card-suit">🚀</span>
+                            </div>
+                            <div class="card-center">
+                                <div class="card-icon">🚀</div>
+                                <h3 class="card-title">技术创新引领者</h3>
+                            </div>
+                            <div class="card-corner bottom-right">
+                                <span class="card-value">A</span>
+                                <span class="card-suit">🚀</span>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-content">
+                                <h3>技术创新引领者</h3>
+                                <div class="card-details">
+                                    <p>推动电子商务从概念到普及，让网络购物成为生活常态，助力云计算、大数据技术落地，赋能企业数字化转型。</p>
+                                    <ul class="card-achievements">
+                                        <li>引领电子商务发展浪潮</li>
+                                        <li>推动云计算技术普及</li>
+                                        <li>促进大数据应用落地</li>
+                                        <li>赋能企业数字化转型</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="poker-card" style="--card-index: 1">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-corner top-left">
+                                <span class="card-value">K</span>
+                                <span class="card-suit">🤝</span>
+                            </div>
+                            <div class="card-center">
+                                <div class="card-icon">🤝</div>
+                                <h3 class="card-title">产业生态构建者</h3>
+                            </div>
+                            <div class="card-corner bottom-right">
+                                <span class="card-value">K</span>
+                                <span class="card-suit">🤝</span>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-content">
+                                <h3>产业生态构建者</h3>
+                                <div class="card-details">
+                                    <p>促成政府、企业、高校、科研机构深度联动，共同制定技术标准、探索合规路径，打造健康产业生态。</p>
+                                    <ul class="card-achievements">
+                                        <li>建立政产学研用金联动机制</li>
+                                        <li>制定行业技术标准</li>
+                                        <li>推动产业合规发展</li>
+                                        <li>构建健康产业生态</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="poker-card" style="--card-index: 2">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-corner top-left">
+                                <span class="card-value">Q</span>
+                                <span class="card-suit">💡</span>
+                            </div>
+                            <div class="card-center">
+                                <div class="card-icon">💡</div>
+                                <h3 class="card-title">创业梦想孵化器</h3>
+                            </div>
+                            <div class="card-corner bottom-right">
+                                <span class="card-value">Q</span>
+                                <span class="card-suit">💡</span>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-content">
+                                <h3>创业梦想孵化器</h3>
+                                <div class="card-details">
+                                    <p>通过创新大赛等平台，为创业者架起与资本对接的桥梁，让创意得以孵化，让创新得以传承。</p>
+                                    <ul class="card-achievements">
+                                        <li>举办创新大赛</li>
+                                        <li>搭建投融资平台</li>
+                                        <li>提供创业指导</li>
+                                        <li>促进创新传承</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="poker-card" style="--card-index: 3">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-corner top-left">
+                                <span class="card-value">J</span>
+                                <span class="card-suit">🌐</span>
+                            </div>
+                            <div class="card-center">
+                                <div class="card-icon">🌐</div>
+                                <h3 class="card-title">全球视野开拓者</h3>
+                            </div>
+                            <div class="card-corner bottom-right">
+                                <span class="card-value">J</span>
+                                <span class="card-suit">🌐</span>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-content">
+                                <h3>全球视野开拓者</h3>
+                                <div class="card-details">
+                                    <p>搭建国际交流平台，促进全球前沿理念与国内产业需求精准对接，推动中国互联网走向世界。</p>
+                                    <ul class="card-achievements">
+                                        <li>举办国际论坛</li>
+                                        <li>促进国际合作</li>
+                                        <li>引进先进理念</li>
+                                        <li>推动全球发展</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center">
+            <div class="title-section">
+                <h2 id="key-role">关键作用</h2>
+            </div>
+        </section>
+        <section class="section key-role-section" aria-labelledby="key-role">
+            <div class="key-role-container">
+                <div class="key-role-main">
+                    <div class="key-role-content">
+                        <h3 class="key-role-title">思想灯塔</h3>
+                        <p class="key-role-desc">作为中国互联网行业的"思想灯塔"，中国互联网大会始终站在时代前沿，以敏锐的洞察力和前瞻性的视野，引领行业发展方向。在人工智能、大数据、区块链等新兴技术领域，大会不仅预判未来趋势，更通过深度研讨和实践案例分享，为企业指明发展方向。在数据安全、隐私保护等关键领域，大会率先布局，推动行业标准制定，让中国互联网行业在全球竞争中掌握话语权。通过持续的思想碰撞和智慧分享，大会已成为推动中国互联网创新发展的重要力量。</p>
+                    </div>
+                </div>
+                <div class="key-role-features">
+                    <div class="key-role-feature">
+                        <div class="feature-icon">🔮</div>
+                        <h4>趋势预判</h4>
+                        <p>精准洞察行业趋势，引领企业布局研发。通过深度分析和专家研讨，为行业发展提供前瞻性指导。</p>
+                    </div>
+                    <div class="key-role-feature">
+                        <div class="feature-icon">🔄</div>
+                        <h4>产业融合</h4>
+                        <p>推动互联网与传统产业深度融合创新，打造数字经济新生态，实现产业升级转型。</p>
+                    </div>
+                    <div class="key-role-feature">
+                        <div class="feature-icon">⚖️</div>
+                        <h4>创新规范</h4>
+                        <p>平衡创新与规范，引领行业健康发展，建立行业自律机制，推动可持续发展。</p>
+                    </div>
+                    <div class="key-role-feature">
+                        <div class="feature-icon">🌐</div>
+                        <h4>全球视野</h4>
+                        <p>搭建国际交流平台，促进全球合作，推动中国互联网走向世界舞台中央。</p>
+                    </div>
+                    <div class="key-role-feature">
+                        <div class="feature-icon">💡</div>
+                        <h4>创新孵化</h4>
+                        <p>培育创新企业，提供资源对接，打造创新创业生态系统，助力梦想起航。</p>
+                    </div>
+                    <div class="key-role-feature">
+                        <div class="feature-icon">🤝</div>
+                        <h4>生态共建</h4>
+                        <p>汇聚政产学研用金多方力量，构建开放共赢的产业生态，推动行业协同发展。</p>
+                    </div>
+                </div>
+                <div class="key-role-details">
+                    <div class="detail-section">
+                        <h4>战略引领</h4>
+                        <p>作为行业发展的"指南针"，大会通过深入研究和前瞻性分析，为行业发展提供战略指引。在人工智能、大数据、区块链等新兴技术领域，大会不仅预判未来趋势，更通过深度研讨和实践案例分享，为企业指明发展方向。通过持续的思想碰撞和智慧分享，推动行业创新发展。</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>标准制定</h4>
+                        <p>在数据安全、隐私保护等关键领域，大会率先布局，推动行业标准制定。通过组织专家研讨、发布白皮书等方式，为行业发展提供规范和指导。同时，积极参与国际标准制定，提升中国互联网行业的国际话语权。</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>创新驱动</h4>
+                        <p>通过创新大赛、创业路演等形式，发掘和培育创新企业。为创业者提供展示平台，对接投资资源，促进创新成果转化。同时，通过案例分享和经验交流，推动行业创新经验的传播和复制。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-6 mt-8" role="contentinfo">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 中国互联网大会版权所有</p>
+        </div>
+    </footer>
+
+    <!-- 异步加载脚本 -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
