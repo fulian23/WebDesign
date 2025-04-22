@@ -1,475 +1,609 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>互联网大会</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: linear-gradient(200deg, #fff, #dfe9f3);
-    }
-
-   .shell {
-      width: 100%;
-      position: relative;
-      padding: 80px 0;
-      transition: 0.3s ease 0s;
-      background-attachment: fixed;
-      background-size: cover;
-      padding-top: 50px;
-    }
-
-   .shell::before {
-      position: absolute;
-      left: 0%;
-      top: 0%;
-      width: 100%;
-      height: 100%;
-      background: rgba(rgb(41, 10, 243), rgb(46, 3, 164), rgb(6, 6, 113), alpha);
-      content: "";
-    }
-
-   .header {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 80px;
-      position: relative;
-    }
-
-   .title {
-      color: white;
-      font-size: 88px;
-      font-weight: normal;
-      margin: 0;
-    }
-
-   .timeline {
-      display: flex;
-      margin: 0 auto;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      max-width: 1000px;
-      position: relative;
-    }
-
-   .content-title {
-      font-weight: normal;
-      font-size: 40px;
-      margin: -10px 0 0 0;
-      transition: 0.4s;
-      padding: 0 10px;
-      box-sizing: border-box;
-      color: rgba(240, 232, 232, 0.925);
-    }
-
-   .timeline::before {
-      position: absolute;
-      left: 50%;
-      width: 2px;
-      height: 100%;
-      margin-left: -1px;
-      content: "";
-      background: rgba(rgb(10, 10, 239), rgb(9, 32, 176), rgb(4, 4, 123), alpha);
-    }
-
-   .item {
-      padding: 80px 0;
-      opacity: 0.3;
-      filter: blur(2px);
-      transition: 0.5s;
-      box-sizing: border-box;
-      width: calc(50% - 40px);
-      display: flex;
-      position: relative;
-      transform: translateY(-80px);
-    }
-
-   .item::before {
-      content: attr(data-text);
-      letter-spacing: 3px;
-      width: 100%;
-      position: absolute;
-      color: hsla(0, 11%, 89%, 0.904);
-      font-size: 35px;
-      border-left: 2px solid rgba(240, 230, 230, 0.895);
-      top: 70%;
-      margin-top: 150px;
-      padding-left: 15px;
-      opacity: 0;
-      right: calc(-100% - 56px);
-      font: 900 20px;
-      letter-spacing: 5px;
-    }
-
-   .item:nth-child(even) {
-      align-self: flex-end;
-    }
-
-   .item:nth-child(even)::before {
-      right: auto;
-      text-align: right;
-      left: calc(-100% - 56px);
-      padding-left: 0;
-      border-left: none;
-      border-right: 2px solid rgba(255, 255, 255, 0.5);
-      padding-right: 15px;
-    }
-
-   .item--active {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0px);
-    }
-
-   .item--active::before {
-      top: 40%;
-      transition: 0.3s all 0.2s;
-      opacity: 1;
-    }
-
-   .item--active.content-title {
-      margin: -60px 0 20px 0;
-    }
-
-   .img {
-      max-width: 100%;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-
-   .subtitle {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 52px;
-      letter-spacing: 5px;
-      margin: 10px 0 0 0;
-      font-weight: normal;
-    }
-
-   .footer {
-      padding: 95px 0;
-      text-align: center;
-    }
-
-   .footer a {
-      color: hsla(0, 80%, 2%, 0.919);
-      display: inline-block;
-    }
-
-    @media only screen and (max-width: 767px) {
-       .item {
-          align-self: baseline !important;
-          width: 100%;
-          padding: 0 30px 150px 80px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国科技发展时间线（2003 - 2023）</title>
+   <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --deep-space: #0a0a1a;
+            --cyber-purple: #6c00ff;
         }
 
-       .item::before {
-          left: 10px !important;
-          padding: 0 !important;
-          top: 50px;
-          text-align: center !important;
-          width: 60px;
-          border: none !important;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-       .item:last-child {
-          padding-bottom: 40px;
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--deep-space);
+            color: white;
+            overflow: hidden;
+            perspective: 1000px;
         }
-    }
 
-    @media only screen and (max-width: 767px) {
-       .timeline::before {
-          left: 40px;
+        .timeline-container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%,
+                    rgba(108, 0, 255, 0.1) 0%,
+                    rgba(10, 10, 26, 1) 70%);
         }
-    }
-  </style>
+
+        .timeline-wrapper {
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .timeline-item {
+            width: 100vw;
+            height: 100vh;
+            padding: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            opacity: 0.2;
+            transform: scale(0.8);
+            transition: all 1s ease;
+        }
+
+        .timeline-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hologram-border {
+            position: absolute;
+            width: 90%;
+            height: 80%;
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--neon-blue);
+            filter: blur(1px);
+            opacity: 0.3;
+            left: 5%;
+            top: 10%;
+        }
+
+        .content-wrapper {
+            flex: 0 0 40%;
+            padding: 40px 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-time {
+            position: absolute;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .timeline-text {
+            font-size: 2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid var(--neon-blue);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            max-width: 80%;
+        }
+
+        .image-container {
+            flex: 0 0 55%;
+            height: 55vh;
+            min-width: 600px;
+            position: relative;
+            transform: translateX(30px) scale(0.9);
+            transition: all 1s ease;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            margin-left: 30px;
+        }
+
+        .timeline-item.active .image-container {
+            transform: translateX(0) scale(1);
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(1.2) contrast(1.1);
+            transition: all 1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .content-wrapper {
+                flex: none;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .timeline-time {
+                position: static;
+                transform: none;
+                right: auto;
+                top: auto;
+                text-align: right;
+                margin-bottom: 1rem;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 40vh;
+                margin-top: 20px;
+            }
+
+            .timeline-text {
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .timeline-item {
+                justify-content: center;
+                gap: 80px;
+            }
+
+            .image-container {
+                height: 65vh;
+                flex: 0 0 50%;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: var(--neon-blue);
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 
 <body>
- 
-  <div class="shell" id="shell">
-    <div class="header">
-      <h2 class="title"> 互联网大会 </h2>
-      <span class="subtitle">发展历程</span>
+    <nav class="text-white py-4" role="navigation" aria-label="主导航">
+        <div class="container mx-auto flex justify-center items-center">
+            <ul class="flex" role="menubar">
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem" aria-current="page">主页</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">优秀案例</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">时间历程</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">大会新闻</a></li>
+                <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem">用户</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="timeline-container">
+        <div class="timeline-wrapper">
+            <!-- 时间线项1 -->
+            <div class="timeline-item active">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2002</h2>
+                    <p class="timeline-text">上海</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/A.jpg" class="timeline-image" alt="神舟五号发射">
+                </div>
+            </div>
+
+            <!-- 时间线项2 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2003</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">透视互联网,迈向e时代</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/B.jpg" class="timeline-image" alt="科技奥运">
+                </div>
+            </div>
+
+            <!-- 时间线项3 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2004</h2>
+                    <p class="timeline-text">北京</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/C.jpg" class="timeline-image" alt="智能世博">
+                </div>
+            </div>
+
+            <!-- 时间线项4 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2005</h2>
+                    <p class="timeline-text">拓展区域合作，把握产业机遇</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/D.jpg" class="timeline-image" alt="蛟龙号深潜">
+                </div>
+            </div>
+
+            <!-- 时间线项5 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2006</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">创新-互联网带来的机遇</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/E.jpg" class="timeline-image" alt="嫦娥三号落月">
+                </div>
+            </div>
+
+            <!-- 时间线项6 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2007</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">和谐网络，品质服务</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/F.jpg" class="timeline-image" alt="青蒿素研究">
+                </div>
+            </div>
+
+            <!-- 时间线项7 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2008</h2>
+                    <p class="timeline-text">江苏-南京</p>
+                    <p class="timeline-text">融合促进发展，渗透创造价值</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/G.jpg" class="timeline-image" alt="天眼系统">
+                </div>
+            </div>
+
+            <!-- 时间线项8 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2009</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">危机·转机·契机 --金融危机下的中国互联网力量与信心</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/H.jpg" class="timeline-image" alt="量子卫星">
+                </div>
+            </div>
+
+            <!-- 时间线项9 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2010</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">服务-网络价值之本； 绿色-网络发展之道</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/I.jpg" class="timeline-image" alt="复兴号高铁">
+                </div>
+            </div>
+
+            <!-- 时间线项10 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2011</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">网络中国-责任与活力</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/J.jpg" class="timeline-image" alt="港珠澳大桥">
+                </div>
+            </div>
+
+            <!-- 时间线项11 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2012</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">开放·诚信·融合-迎接移动互联新时代</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/K.jpg" class="timeline-image" alt="嫦娥四号月背">
+                </div>
+            </div>
+
+            <!-- 时间线项12 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2013</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">共建良好生态环境，服务美好网络生活</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/L.jpg" class="timeline-image" alt="北斗导航系统">
+                </div>
+            </div>
+
+            <!-- 时间线项13 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2014</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">创造无限机会-打造新时代经济引擎</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/M.jpg" class="timeline-image" alt="天问一号火星">
+                </div>
+            </div>
+
+            <!-- 时间线项14 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2015</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">开启互联网+新生态</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/N.jpg" class="timeline-image" alt="九章量子计算">
+                </div>
+            </div>
+
+            <!-- 时间线项15 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2016</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">繁荣网络经济，建设网络强国</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/O.jpg" class="timeline-image" alt="中国空间站天和核心舱">
+                </div>
+            </div>
+
+            <!-- 时间线项16 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2017</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">广连接·新活力·融实业</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/P.jpg" class="timeline-image" alt="奋斗者号潜水器">
+                </div>
+            </div>
+
+            <!-- 时间线项17 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2018</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">融合发展，协同共治--新时代 新征程 新动能</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/Q.jpg" class="timeline-image" alt="高速磁浮交通系统">
+                </div>
+            </div>
+
+            <!-- 时间线项18 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2019</h2>
+                    <p class="timeline-text">北京</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/R.jpg" class="timeline-image" alt="国产大飞机 C919">
+                </div>
+            </div>
+
+            <!-- 时间线项19 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2020</h2>
+                    <p class="timeline-text">云端</p>
+                    <p class="timeline-text">共迎网络新时代，共创产业新未来</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/S.jpg" class="timeline-image" alt="FAST 发现快速射电暴">
+                </div>
+            </div>
+
+            <!-- 时间线项20 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2021</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">新阶段、新理念、新格局--互联网引领数字经济新发展</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/T.jpg" class="timeline-image" alt="海洋油气生产装备智能制造基地">
+                </div>
+            </div>
+
+            <!-- 时间线项21 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2022</h2>
+                    <p class="timeline-text">深圳</p>
+                    <p class="timeline-text">发展数字经济，促进数字文明</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/U.jpg" class="timeline-image" alt="神舟十六号发射">
+                </div>
+            </div>
+
+            <!-- 时间线项22 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2023</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">促进数字融合，赋能千行百业</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/V.jpg" class="timeline-image" alt="嫦娥六号发射">
+                </div>
+            </div>
+
+            <!-- 时间线项23 -->
+            <div class="timeline-item">
+                <div class="hologram-border"></div>
+                <div class="content-wrapper">
+                    <h2 class="timeline-time">2024</h2>
+                    <p class="timeline-text">北京</p>
+                    <p class="timeline-text">推动了我国人工智能产业的快速发展，为经济社会数字化转型提供了强大动力</p>
+                </div>
+                <div class="image-container">
+                    <img src="../static/image/W.jpg" class="timeline-image" alt="人工智能大模型">
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="indicator-dot active"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+        </div>
     </div>
-    <div class="timeline">
-      <div class="item" data-text="2002年
-                                    上海">
-        <div class="content">
-          <img src="./images/1.jpg" alt="" class="img">
-          <h2 class="content-title"></h2>
-          <p class="content-desc">
 
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2003年
-                                    北京">
-        <div class="content">
-          <img src="./images/222.jpg" alt="" class="img">
-          <h2 class="content-title">透视互联网,迈向e时代</h2>
-          <p class="content-desc">
+    <script>
+        let currentIndex = 0;
+        const wrapper = document.querySelector('.timeline-wrapper');
+        const items = document.querySelectorAll('.timeline-item');
+        const dots = document.querySelectorAll('.indicator-dot');
+        let isAnimating = false;
 
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2004年
-                                    北京">
-        <div class="content">
-          <img src="./images/3.jpg" alt="" class="img">
-          <h2 class="content-title"></h2>
-          <p class="content-desc">
+        // 创建粒子效果
+        function createParticles() {
+            const container = document.createElement('div');
+            container.className = 'particle-layer';
 
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2005年">
-        <div class="content">
-          <img src="./images/4.jpg" alt="" class="img">
-          <h2 class="content-title">拓展区域合作，把握产业机遇</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2006年
-                                    北京">
-        <div class="content">
-          <img src="./images/5.jpg" alt="" class="img">
-          <h2 class="content-title">   创新-互联网带来的机遇</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2007年北京">
-        <div class="content">
-          <img src="./images/6.jpg" alt="" class="img">
-          <h2 class="content-title">和谐网络，品质服务</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2008年江苏-南京">
-        <div class="content">
-          <img src="./images/7.jpg" alt="" class="img">
-          <h2 class="content-title">融合促进发展，渗透创造价值</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2009年北京">
-        <div class="content">
-          <img src="./images/8.jpg" alt="" class="img">
-          <h2 class="content-title"> 危机·转机·契机 --金融危机下的中国互联网力量与信心</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2010年北京">
-        <div class="content">
-          <img src="./images/9.jpg" alt="" class="img">
-          <h2 class="content-title">服务-网络价值之本；
-            绿色-网络发展之道
-          </h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2011年北京">
-        <div class="content">
-          <img src="./images/10.jpg" alt="" class="img">
-          <h2 class="content-title">网络中国-责任与活力</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2012年北京">
-        <div class="content">
-          <img src="./images/11.jpg" alt="" class="img">
-          <h2 class="content-title">开放·诚信·融合-迎接移动互联新时代</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2013年北京">
-        <div class="content">
-          <img src="./images/12.jpg" alt="" class="img">
-          <h2 class="content-title">共建良好生态环境，服务美好网络生活</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2014年北京">
-        <div class="content">
-          <img src="./images/13.jpg" alt="" class="img">
-          <h2 class="content-title">创造无限机会-打造新时代经济引擎</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2015年北京">
-        <div class="content">
-          <img src="./images/14.jpg" alt="" class="img">
-          <h2 class="content-title">开启互联网+新生态</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2016年北京">
-        <div class="content">
-          <img src="./images/15.jpg" alt="" class="img">
-          <h2 class="content-title">繁荣网络经济，建设网络强国</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2017年北京">
-        <div class="content">
-          <img src="./images/16.jpg" alt="" class="img">
-          <h2 class="content-title">广连接·新活力·融实业</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2018年北京">
-        <div class="content">
-          <img src="./images/17.jpg" alt="" class="img">
-          <h2 class="content-title">融合发展，协同共治--新时代 新征程 新动能</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2019年北京">
-        <div class="content">
-          <img src="./images/18.jpg" alt="" class="img">
-          <h2 class="content-title"></h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2020年云端">
-        <div class="content">
-          <img src="./images/19.jpg" alt="" class="img">
-          <h2 class="content-title">共迎网络新时代，共创产业新未来</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2021年北京">
-        <div class="content">
-          <img src="./images/20.jpg" alt="" class="img">
-          <h2 class="content-title">新阶段、新理念、新格局--互联网引领数字经济新发展</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2022年深圳">
-        <div class="content">
-          <img src="./images/21.jpg" alt="" class="img">
-          <h2 class="content-title">发展数字经济，促进数字文明</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2023年北京">
-        <div class="content">
-          <img src="./images/22.jpg" alt="" class="img">
-          <h2 class="content-title">促进数字融合，赋能千行百业</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-      <div class="item" data-text="2024年北京">
-        <div class="content">
-          <img src="./images/23.jpg" alt="" class="img">
-          <h2 class="content-title">互联三十载，智汇新质变</h2>
-          <p class="content-desc">
-
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script>
-    (function ($) {
-      $.fn.timeline = function () {
-        var selectors = {
-          id: $(this),
-          item: $(this).find(".item"),
-          activeClass: "item--active",
-          img: ".img"
-        };
-        selectors.item.eq(0).addClass(selectors.activeClass);
-        selectors.id.css(
-          "background-image",
-          "url(" +
-          selectors.item.first()
-           .find(selectors.img)
-           .attr("src") + ")"
-        );
-        var itemlength = selectors.item.length;
-        $(window).scroll(function () {
-          var max, min;
-          var pos = $(this).scrollTop();
-          selectors.item.each(function (i) {
-            min = $(this).offset().top;
-            max = $(this).height() + $(this).offset().top;
-            var that = $(this);
-            if (pos <= max - 10 && pos >= min) {
-              selectors.id.css(
-                "background-image",
-                "url(" +
-                that.find(selectors.img)
-                 .attr("src") +
-                ")"
-              );
-              selectors.item.removeClass(selectors.activeClass);
-              $(this).addClass(selectors.activeClass);
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    width: ${Math.random() * 3}px;
+                    height: ${Math.random() * 3}px;
+                    animation: particle ${2 + Math.random() * 3}s infinite;
+                    opacity: ${0.2 + Math.random() * 0.3};
+                `;
+                container.appendChild(particle);
             }
-          });
-        });
-      };
-    })(jQuery);
-    $("#shell").timeline();
+            document.body.appendChild(container);
+        }
+        createParticles();
 
-    function autoScroll() {
-      const timelineContainer = document.getElementById('shell');
-      const itemHeight = document.querySelector('.item').offsetHeight;
-      let currentScroll = timelineContainer.scrollTop;
-      currentScroll += 1; 
-      timelineContainer.scrollTop = currentScroll;
-      if (currentScroll % itemHeight === 0) {
-        setTimeout(autoScroll, 2000); 
-      } else {
-        setTimeout(autoScroll, 10); 
-      }
-    }
-    autoScroll();
-  </script>
+        // 处理滚动事件
+        function handleWheel(e) {
+            if (isAnimating) return;
+            if (Math.abs(e.deltaY) < 50) return;
+
+            const direction = e.deltaY > 0 ? 1 : -1;
+            const newIndex = Math.max(0, Math.min(currentIndex + direction, items.length - 1));
+
+            if (newIndex !== currentIndex) {
+                isAnimating = true;
+
+                // 移除当前激活状态
+                items[currentIndex].classList.remove('active');
+                dots[currentIndex].classList.remove('active');
+
+                // 更新索引
+                currentIndex = newIndex;
+
+                // 应用新状态
+                wrapper.style.transform = `translateY(-${currentIndex * 100}vh)`;
+                items[currentIndex].classList.add('active');
+                dots[currentIndex].classList.add('active');
+
+                // 重置动画状态
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 1000);
+            }
+        }
+
+        // 添加样式动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particle {
+                0% { transform: translate(0,0); opacity: 0; }
+                50% { opacity: 1; }
+                100% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 事件监听
+        window.addEventListener('wheel', handleWheel, { passive: false });
+    </script>
 </body>
 
-</html>    
+</html>
+    
