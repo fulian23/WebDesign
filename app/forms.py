@@ -23,4 +23,4 @@ class RegisterForm(FlaskForm):
         DataRequired(message="密码不能为空"),
         Length(min=6, max=15, message="密码长度需在6-15字符")
     ])
-    submit = SubmitField('注册')
+    submit = SubmitField('登录')

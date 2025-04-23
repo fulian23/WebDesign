@@ -1,12 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, flash
+import requests
+from urllib import parse
+from flask import Flask, render_template, redirect, url_for, flash, request, Response
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
-
 from app import routes
 from app import apis
 
 from db_config import Config
-from app.models import db, Users
+from app.models import db, Users, Cases
 
 from app.forms import LoginForm, RegisterForm
 
@@ -14,7 +15,8 @@ from app.forms import LoginForm, RegisterForm
 
 
 app = Flask(__name__)
-app.secret_key = 'test'
+app.secret_key = 'db_test.py'
+
 # csrf = CSRFProtect(app)
 app.register_blueprint(routes.news)
 app.register_blueprint(apis.api)
@@ -31,6 +33,10 @@ db.init_app(app)
 def load_user(user_id):
     return db.session.get(Users, int(user_id))
 
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 async def login():
@@ -88,9 +94,21 @@ def dashboard():
     }
     return render_template('dashboard.html', user_info=user_info)
 
-@app.route('/test')
-def test():
-    return render_template('test.html')
+@app.route('/study_cases')
+def study_cases():
+    page = request.args.get('page', 1, type=int)
+    cases=db.session.query(Cases).paginate(page=page, per_page=12)
+    return render_template('case_study.html', cases=cases)
+
+@app.route('/history')
+def history():
+    return render_template('history.html')
+
+@app.route('/news')
+def news():
+    return render_template('news_list.html')
+
+
 
 
 if __name__ == '__main__':

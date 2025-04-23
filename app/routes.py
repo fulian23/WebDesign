@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 
-from app.models import db, Articles, Comments
+from app.models import db, Articles, Comments, Users
 
 import time
 
@@ -35,13 +35,12 @@ def search_articles():
 def article_detail(news_id):
     # 获取文章并预加载关联数据
     article = Articles.query.options(
-        db.joinedload(Articles.comments)  # 加载评论
-        .joinedload(Comments.commenter)  # 加载评论者信息
+        db.joinedload(Articles.comments)
+        .joinedload(Comments.commenter)
     ).get_or_404(news_id)
 
     # 分页参数处理
     page = request.args.get('page', 1, type=int)
-    per_page = 10  # 每页评论数
 
     # 获取分页对象
     comments_query = Comments.query.filter_by(article_id=article.id)
@@ -64,15 +63,13 @@ def post_comment(news_id):
     article = Articles.query.get_or_404(news_id)
 
     # 获取并验证评论内容
-    content = request.form.get('content', '').strip()
-    if not content:
-        flash('评论内容不能为空', 'error')
-        return redirect(url_for('article_detail', news_id=article.id))
-
+    content = request.json.get('content', '').strip()
+    avatar = Users.query.get(current_user.id).avatar
     # 创建评论对象
     new_comment = Comments(
         content=content,
         user_id=current_user.id,
+        commenter_avatar=avatar,
         article_id=article.id,
         timestamp=int(time.time())
     )
@@ -81,12 +78,12 @@ def post_comment(news_id):
     try:
         db.session.add(new_comment)
         db.session.commit()
-        flash('评论发布成功', 'success')
+        return {'code': 200, 'msg': '评论发布成功'}
     except Exception as e:
         db.session.rollback()
-        flash('评论发布失败，请稍后重试', 'error')
+        return {'code': 500, 'msg': '评论发布失败'}
 
-    return redirect(url_for('news.article_detail', news_id=article.id))
+
 
 
 

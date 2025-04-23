@@ -1,44 +1,222 @@
-<!-- 文章标题和内容 -->
-<h1>{{ article.title }}</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
-{% for p in article.content.content %}
-  <p>
-    {{ p|safe }}
-  </p>
-{% endfor %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="referrer" content="no-referrer">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+       .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-<!-- 评论表单 -->
-{% if current_user.is_authenticated %}
-  <form method="POST" action="{{ url_for('news.post_comment', news_id=article.id) }}">
-    <textarea name="content" rows="3" cols="80" placeholder="输入评论内容..." required></textarea>
-    <br>
-    <button type="submit">提交评论</button>
-  </form>
-{% else %}
-  <p>[请先<a href="{{ url_for('login') }}">登录</a>后评论]</p>
-{% endif %}
+       .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            color: #007BFF;
+            margin-bottom: 30px;
+            text-decoration: none;
+        }
 
-<!-- 评论列表 -->
-<h3>评论（{{ pagination.total }}条）</h3>
-{% for comment in comments %}
-  <div style="margin: 10px 0; padding: 5px; border-bottom: 1px solid #eee;">
-    <div>
-      <strong>{{ comment.commenter.username }}</strong>
-      <span style="color: #666;">{{ comment.formatted_time.strftime('%Y-%m-%d %H:%M') }}</span>
+       .back-btn:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+       .article-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+        }
+
+
+       .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+       .link {
+            color: #007BFF;
+            text-decoration: underline;
+        }
+
+       .comment-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #F8F9FA;
+            border-radius: 12px;
+        }
+
+       .comment-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+       .comment-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+       .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+       .comment-author {
+            font-weight: bold;
+            color: #1A1A1A;
+        }
+
+       .comment-time {
+            color: #666;
+            font-size: 14px;
+        }
+
+       .pagination {
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+    <title>2024（第二十三届）中国互联网大会圆满闭幕</title>
+</head>
+
+<body class="bg-gray-100">
+    <script>document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('referrerPolicy','no-referrer');
+    });
+});</script>
+    <div class="article-container">
+        <!-- 返回按钮 -->
+        <a href="news-list.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> 返回新闻资讯列表
+        </a>
+
+        <!-- 主标题及元数据 -->
+        <h1 class="article-title">
+            2024（第二十三届）中国互联网大会圆满闭幕
+        </h1>
+        <p style="color: #666;">发布时间：{{ article.formatted_time.strftime('%Y-%m-%d %H:%M') }}</p>
+        {{ article.content|safe }}
+
+        <!-- 评论区 -->
+        <div class="comment-section">
+        <h3 class="comment-title">评论区</h3>
+        {% if current_user.is_authenticated %}
+            <form method="POST" action="{{ url_for('news.post_comment', news_id=article.id) }}"
+          class="bg-white rounded-lg p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+        <textarea name="content" rows="4"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                   placeholder-gray-400 text-gray-700 resize-none transition-colors duration-200"
+            placeholder="写下您的见解..."></textarea>
+        <div class="mt-4 flex justify-end space-x-3">
+            <button type="submit"
+                class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg
+                       hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300
+                       transition-all duration-200 shadow-sm hover:shadow-md">
+                <i class="fas fa-paper-plane mr-2"></i>发布评论
+            </button>
+        </div>
+    </form>
+        {% else %}
+            <p class="mb-4 text-gray-700">[请先<a href="/login" class="link">登录</a>后评论]</p>
+        {% endif %}
+        <h3 class="comment-title">评论（{{ pagination.total }}条）</h3>
+            {% for comment in comments %}
+            <div class="comment-item flex items-start space-x-4">
+                <div class="shrink-0">
+                    <img src="{{ comment.commenter_avatar or '/static/avatars/default.jpg'}}"
+                         alt="{{ comment.commenter.username }}的头像"
+                         class="w-10 h-10 rounded-full object-cover border-2 border-gray-200
+                                hover:border-blue-500 transition-all duration-300">
+                </div>
+                <div class="flex-1">
+                    <div class="comment-header">
+                        <div class="flex items-baseline space-x-2">
+                            <strong class="comment-author text-gray-900">
+                                {{ comment.commenter.username }}
+                            </strong>
+                            <span class="comment-time text-sm text-gray-500">
+                                {{ comment.formatted_time.strftime('%Y-%m-%d %H:%M') }}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mt-1">{{ comment.content }}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
     </div>
-    <p>{{ comment.content }}</p>
-  </div>
-{% endfor %}
+<script>
 
-<!-- 分页 -->
-<div>
-  {% if pagination.has_prev %}
-    <a href="{{ url_for('article_detail', news_id=article.id, page=pagination.prev_num) }}">上一页</a>
-  {% endif %}
+ document.querySelector('form').addEventListener('submit', (e) => {
+     e.preventDefault();
 
-  <span>第 {{ pagination.page }} 页</span>
+    const textarea = e.target.querySelector('textarea');
+    const commentContent = textarea.value.trim();
 
-  {% if pagination.has_next %}
-    <a href="{{ url_for('article_detail', news_id=article.id, page=pagination.next_num) }}">下一页</a>
-  {% endif %}
-</div>
+    if (!commentContent) {
+
+        alert('评论内容不能为空');
+        textarea.focus();
+        return;
+    }
+    try {
+        fetch(`/news/1/comment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: commentContent })
+        });} catch (err) {}
+
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item flex items-start space-x-4';
+    newComment.innerHTML = `
+       <div class="shrink-0">
+                    <img src="{{ current_user.avatar or '/static/avatars/default.jpg' }}"
+                         alt="{{ current_user.username }}的头像"
+                         class="w-10 h-10 rounded-full object-cover border-2 border-gray-200
+                                hover:border-blue-500 transition-all duration-300">
+                </div>
+                <div class="flex-1">
+                    <div class="comment-header">
+                        <div class="flex items-baseline space-x-2">
+                            <strong class="comment-author text-gray-900">
+                                {{ current_user.username }}
+                            </strong>
+                            <span class="comment-time text-sm text-gray-500">
+                                刚刚
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mt-1">${commentContent}</p>
+                </div>
+    `;
+
+    const commentSection = document.querySelector('.comment-section');
+    commentSection.insertBefore(newComment, commentSection.children[3]);
+
+     textarea.value = '';
+    textarea.focus();
+});
+</script>
+</body>
+
+</html>

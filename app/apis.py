@@ -18,7 +18,7 @@ def upload_avatar():
         return {"message": "图片格式错误"}, 400
     filename = md5(image.filename+str(time.time()))+'.'+ext
     image.save(os.path.join('static', 'avatars', filename))
-    db.session.query(Users).filter_by(username=request.form.get("username")).first().avatar=filename
+    db.session.query(Users).filter_by(username=request.form.get("username")).first().avatar="/static/avatars/"+filename
     db.session.commit()
     return redirect(url_for('dashboard'))
 @api.route('/changeUsername', methods=['POST'])

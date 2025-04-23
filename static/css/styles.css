@@ -1,10 +1,6 @@
-/* 全局样式 */
 :root {
-    --primary-color: #1a73e8;
-    --secondary-color: #4285f4;
-    --text-color: #333;
-    --light-gray: #f5f5f5;
-    --dark-gray: #666;
+    --primary-color: #7ef0ff;
+    --text-color: #262626;
     --background-color: #262626;
     --white: #ffffff;
     --gray-100: #f3f4f6;
@@ -12,15 +8,18 @@
     --transition-speed: 0.3s;
 }
 
-body {
-    font-family: 'Noto Sans SC', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     min-height: 100vh;
     background-color: var(--background-color);
     overflow: auto;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: var(--text-color);
 }
 
 /* 鼠标跟随线条效果 */
@@ -28,28 +27,90 @@ body {
     display: none;
 }
 
-/* 导航栏样式 */
-.navbar {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* 导航栏优化 */
+nav {
+    transition: transform var(--transition-speed) ease;
+    transform: translateY(-100%);
     position: fixed;
-    width: 100%;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    background-color: transparent;
 }
 
-/* 主要内容区域 */
-.main-content {
-    margin-top: 80px;
-    padding: 20px;
+body:hover nav {
+    transform: translateY(0);
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .main-content {
-        margin-top: 60px;
-        padding: 10px;
-    }
+nav.container {
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav ul li a {
+    color: #1e293b;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+nav ul li a[aria-current="page"] {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+/* 初始全屏黑色背景 */
+.initial-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.initial-title {
+    color: #fff;
+    font-size: min(12rem, 10vw);
+    font-weight: bold;
+    text-align: center;
+    opacity: 1;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    position: absolute;
+}
+
+.initial-screen.fade-out {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.initial-screen.fade-out .initial-title {
+    opacity: 0;
+    transform: scale(0.5) translateY(0);
 }
 
 /* 标题区域优化 */

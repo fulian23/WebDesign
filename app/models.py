@@ -28,7 +28,7 @@ class Users(db.Model,UserMixin):
 class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
-    content = db.Column(db.JSON, nullable=False)
+    content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.Integer, nullable=False)
     comments = db.relationship('Comments', backref='article', lazy='select')
 
@@ -39,6 +39,7 @@ class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.Integer, nullable=False)
+    commenter_avatar = db.Column(db.String(256), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'), nullable=False)
@@ -48,6 +49,14 @@ class Comments(db.Model):
     @property
     def formatted_time(self):
         return datetime.fromtimestamp(self.timestamp)
+
+class Cases(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image = db.Column(db.String(256), nullable=False)
+    link = db.Column(db.String(256), nullable=False)
+    category = db.Column(db.String(256), nullable=False)
 
 
 
