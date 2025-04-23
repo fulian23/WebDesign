@@ -7,7 +7,7 @@ from app import routes
 from app import apis
 
 from db_config import Config
-from app.models import db, Users, Cases
+from app.models import db, Users, Cases, Articles
 
 from app.forms import LoginForm, RegisterForm
 
@@ -106,7 +106,9 @@ def history():
 
 @app.route('/news')
 def news():
-    return render_template('news_list.html')
+    page = request.args.get('page', 1, type=int)
+    news = db.session.query(Articles).paginate(page=page, per_page=8)
+    return render_template('news_list.html', news_list=news)
 
 
 

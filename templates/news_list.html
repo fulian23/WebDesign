@@ -9,24 +9,19 @@
     <!-- 加载字体 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <style>
         :root {
             --primary-color: #7ef0ff;
             --text-color: #262626;
-            --background-color: #ffffff;
+            --background-color: #f3f4f6;
             --white: #ffffff;
             --gray-100: #f3f4f6;
             --gray-800: #1f2937;
             --transition-speed: 0.3s;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+
 
         body {
             min-height: 100vh;
@@ -36,55 +31,6 @@
             color: var(--text-color);
         }
 
-        /* 导航栏优化 */
-        nav {
-            transition: transform var(--transition-speed) ease;
-            transform: translateY(-100%);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background-color: transparent;
-        }
-
-        body:hover nav {
-            transform: translateY(0);
-        }
-
-        nav.container {
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 9999px;
-            padding: 0.5rem 1.5rem;
-            display: flex;
-            gap: 1rem;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        nav ul li a {
-            color: #1e293b;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            transition: all 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
-
-        nav ul li a[aria-current="page"] {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-        }
 
         /* 新闻容器样式 */
         .news-container {
@@ -121,7 +67,25 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
-
+        .page-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: white;
+            color: #0062cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .page-item.active {
+            background-color: #0062cc;
+            color: white;
+        }
         .news-item:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             transform: translateY(-5px);
@@ -204,9 +168,7 @@
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            position: relative;
+            margin-top: 50px;
         }
 
         .pagination button {
@@ -228,36 +190,6 @@
             border-color: #007BFF;
         }
 
-        /* 分页箭头样式 */
-        .pagination-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-weight: normal;
-        }
-
-        .pagination-arrow:hover {
-            background-color: #f0f0f0;
-        }
-
-        .pagination-arrow.prev {
-            left: calc(50% - 200px);
-        }
-
-        .pagination-arrow.next {
-            right: calc(50% - 200px);
-        }
     </style>
 </head>
 
@@ -281,174 +213,50 @@
         <div class="news-list" id="newsList">
             <!-- 原底部新闻项移到这里 -->
             <div class="news-item">
+                <a href="/news/1">
                 <img src="../static/image/W.jpg" alt="新闻图片">
-                <a href="text1.html" class="bottom-news-title">2024（第二十三届）中国互联网大会圆满闭幕</a>
+                <h3>2024（第二十三届）中国互联网大会圆满闭幕</h3>
                 <p>07-12 2024</p>
+                </a>
             </div>
             <div class="news-item">
+                <a href="/news/2">
                 <img src="../static/image/W.jpg" alt="新闻图片">
                 <h3>中国互联网协会、中国信息通信研究院共同发布《互联网信息服务算法推荐合规自律公约》</h3>
                 <p>07-12 2024</p>
+                </a>
             </div>
             <div class="news-item">
+                <a href="/news/3">
                 <img src="../static/image/W.jpg" alt="新闻图片">
                 <h3>2024中国互联网大会丨滴滴胡成：移动互联网让出行更美好</h3>
                 <p>07-12 2024</p>
+                </a>
             </div>
         </div>
     </div>
 
     <!-- 新增：底部新闻区 -->
     <div class="bottom-news-section" id="bottomNewsSection">
-        <!-- 原滑动新闻项会通过 JavaScript 动态插入 -->
+        {% for news in news_list %}
+        <div class="bottom-news-item">
+            <div class="bottom-news-date">{{ news.formatted_time.strftime('%Y-%m-%d %H:%M')}}</div>
+            <a href="/news/{{ news.id }}" class="bottom-news-title">{{ news.title }}</a>
+        </div>
+        {% endfor %}
     </div>
-
     <!-- 分页 -->
     <div class="pagination" id="pagination">
-        <div class="pagination-arrow prev" id="prevPage">&lt;</div>
-        <!-- 分页按钮将在此动态生成 -->
-        <div class="pagination-arrow next" id="nextPage">&gt;</div>
+        {% for p in range(1, news_list.pages + 1) %}
+            <a href="{{ '' if p == news_list.page else url_for('news', page=p) }}" class="page-item {{ 'active' if p == news_list.page }}" data-page="{{ p }}">{{ p }}</a>
+        {% endfor %}
     </div>
+    <footer class="bg-gray-800 text-white py-6 mt-8" role="contentinfo">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 中国互联网大会版权所有</p>
+        </div>
+    </footer>
 
-    <script>
-        const newsList = document.querySelector('.news-list');
-        const newsItems = document.querySelectorAll('.news-item');
-        const itemWidth = newsItems[0].offsetWidth + 20; // 加上间距
-        let currentIndex = 0;
-
-        function prevNews() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateNewsList();
-            }
-        }
-
-        function nextNews() {
-            if (currentIndex < newsItems.length - 1) {
-                currentIndex++;
-                updateNewsList();
-            }
-        }
-
-        function updateNewsList() {
-            const translateX = -currentIndex * itemWidth;
-            newsList.style.transform = `translateX(${translateX}px)`;
-        }
-
-        const originalSlidingNews = [
-            {
-                title: '2024中国互联网大会 | 智慧教育论坛在京举办',
-                date: '2024-07-12 09:35:09'
-            },
-            {
-                title: '2024中国互联网大会 | 互联网新质创新发展论坛在京举办',
-                date: '2024-07-12 09:34:48'
-            },
-            {
-                title: '2024中国互联网大会 | 拼多多朱政：坚持高质量发展 构筑新质生产力',
-                date: '2024-07-11 09:05:13'
-            },
-            {
-                title: '2024中国互联网大会 | 中国移动副总经理张冬：建设智能互联网 发展新质生产力',
-                date: '2024-07-11 09:03:55'
-            },
-            {
-                title: '2024中国互联网大会 | 奇安信齐向东：以AI驱动安全 全力护航互联网新质变',
-                date: '2024-07-11 09:04:54'
-            },
-            {
-                title: '2024中国互联网大会 | 360周鸿祎：没有互联网的发展 就没有人工智能发展',
-                date: '2024-07-11 09:05:31'
-            }
-        ];
-
-        // 模拟数据到12页
-        for (let i = originalSlidingNews.length; i < 48; i++) {
-            originalSlidingNews.push({
-                title: `模拟新闻标题 ${i + 1}`,
-                date: `2024-07-12 09:35:0${i % 10}`
-            });
-        }
-
-        const itemsPerPage = 4;
-        let currentPage = 1;
-        const visiblePages = 6;
-
-        function renderNews() {
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const newsToShow = originalSlidingNews.slice(startIndex, endIndex);
-
-            const bottomNewsSection = document.getElementById('bottomNewsSection');
-            bottomNewsSection.innerHTML = '';
-
-            newsToShow.forEach(news => {
-                const newsItem = document.createElement('div');
-                newsItem.classList.add('bottom-news-item');
-                newsItem.innerHTML = `
-                    <div class="bottom-news-date">${news.date}</div>
-                    <a href="#" class="bottom-news-title">${news.title}</a>
-                `;
-                bottomNewsSection.appendChild(newsItem);
-            });
-        }
-
-        function renderPagination() {
-            const totalPages = Math.ceil(originalSlidingNews.length / itemsPerPage);
-            const pagination = document.getElementById('pagination');
-            pagination.innerHTML = '';
-
-            const prevButton = document.createElement('div');
-            prevButton.classList.add('pagination-arrow', 'prev');
-            prevButton.id = 'prevPage';
-            prevButton.textContent = '<';
-            prevButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderNews();
-                    renderPagination();
-                }
-            });
-            pagination.appendChild(prevButton);
-
-            let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + visiblePages - 1);
-
-            if (endPage - startPage + 1 < visiblePages) {
-                startPage = Math.max(1, endPage - visiblePages + 1);
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                if (i === currentPage) {
-                    button.classList.add('active');
-                }
-                button.addEventListener('click', () => {
-                    currentPage = i;
-                    renderNews();
-                    renderPagination();
-                });
-                pagination.appendChild(button);
-            }
-
-            const nextButton = document.createElement('div');
-            nextButton.classList.add('pagination-arrow', 'next');
-            nextButton.id = 'nextPage';
-            nextButton.textContent = '>';
-            nextButton.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderNews();
-                    renderPagination();
-                }
-            });
-            pagination.appendChild(nextButton);
-        }
-
-        renderNews();
-        renderPagination();
-    </script>
 </body>
 
 </html>    
