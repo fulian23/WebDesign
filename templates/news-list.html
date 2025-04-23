@@ -314,7 +314,6 @@
         const newsList = document.querySelector('.news-list');
         const newsItems = document.querySelectorAll('.news-item');
         const itemWidth = newsItems[0].offsetWidth + 20; // 加上间距
-        const image=new Image();
         let currentIndex = 0;
 
         function prevNews() {
@@ -338,32 +337,26 @@
 
         const originalSlidingNews = [
             {
-                img:'../static/image/W.jpg',
                 title: '2024中国互联网大会 | 智慧教育论坛在京举办',
                 date: '2024-07-12 09:35:09'
             },
             {
-                img: '../static/image/W.jpg',
                 title: '2024中国互联网大会 | 互联网新质创新发展论坛在京举办',
                 date: '2024-07-12 09:34:48'
             },
             {
-                img: '../static/image/W.jpg',
                 title: '2024中国互联网大会 | 拼多多朱政：坚持高质量发展 构筑新质生产力',
                 date: '2024-07-11 09:05:13'
             },
             {
-                img: '../static/image/W.jpg',
                 title: '2024中国互联网大会 | 中国移动副总经理张冬：建设智能互联网 发展新质生产力',
                 date: '2024-07-11 09:03:55'
             },
             {
-                img: '../static/image/W.jpg',
                 title: '2024中国互联网大会 | 奇安信齐向东：以AI驱动安全 全力护航互联网新质变',
                 date: '2024-07-11 09:04:54'
             },
             {
-                img: '../static/image/W.jpg',
                 title: '2024中国互联网大会 | 360周鸿祎：没有互联网的发展 就没有人工智能发展',
                 date: '2024-07-11 09:05:31'
             }
@@ -372,7 +365,6 @@
         // 模拟数据到12页
         for (let i = originalSlidingNews.length; i < 48; i++) {
             originalSlidingNews.push({
-                img: '../static/image/W.jpg',
                 title: `模拟新闻标题 ${i + 1}`,
                 date: `2024-07-12 09:35:0${i % 10}`
             });
@@ -394,7 +386,6 @@
                 const newsItem = document.createElement('div');
                 newsItem.classList.add('bottom-news-item');
                 newsItem.innerHTML = `
-                    <img src="${news.img}" alt="新闻图片">
                     <div class="bottom-news-date">${news.date}</div>
                     <a href="#" class="bottom-news-title">${news.title}</a>
                 `;
