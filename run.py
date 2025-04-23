@@ -35,6 +35,7 @@ def load_user(user_id):
 
 
 @app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
     return render_template('index.html')
 
@@ -87,7 +88,7 @@ def logout():
 def dashboard():
     print(current_user.username)
     user=db.session.query(Users).filter_by(username=current_user.username).first()
-    avatar = "static/avatars/"+user.avatar
+    avatar = user.avatar
     user_info = {
         'username': current_user.username,
         'avatar': avatar
