@@ -135,7 +135,7 @@
         {% else %}
             <p class="mb-4 text-gray-700">[请先<a href="/login" class="link">登录</a>后评论]</p>
         {% endif %}
-        <h3 class="comment-title">评论（{{ pagination.total }}条）</h3>
+        <h3 class="comment-title mark">评论（{{ pagination.total }}条）</h3>
             {% for comment in comments %}
             <div class="comment-item flex items-start space-x-4">
                 <div class="shrink-0">
@@ -182,13 +182,17 @@
         return;
     }
     try {
-        fetch(`/news/1/comment`, {
+        fetch(`/news/{{ news_id }}/comment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ content: commentContent })
         });} catch (err) {}
+    const commentTitle = document.querySelector('.mark');
+    console.log(commentTitle);
+    const currentCount = parseInt(commentTitle.textContent.match(/\d+/)[0]);
+    commentTitle.textContent = `评论（${currentCount + 1}条）`;
 
     const newComment = document.createElement('div');
     newComment.className = 'comment-item flex items-start space-x-4';

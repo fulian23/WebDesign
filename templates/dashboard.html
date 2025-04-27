@@ -3,204 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户设置 - {{ user_info.username }}</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container { max-width: 600px; margin-top: 50px; }
-        .form-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .username-label { font-weight: bold; color: #333; }
-    </style>
+    <title>个人中心</title>
+    <link rel="stylesheet" href="../static/css/dash_styles.css">
+    <script src="../static/js/three.js"></script>
+    <script src="https://unpkg.com/three-spritetext"></script>
 </head>
 <body>
     <div class="container">
-        <!-- 当前用户展示 -->
-        <div class="alert alert-info d-flex align-items-center">
-        <!-- 添加头像展示 -->
-        <img src="{{ user_info.avatar }}"
-             class="rounded-circle me-3"
-             style="width: 50px; height: 50px; object-fit: cover;"
-             alt="用户头像"
-             onerror="this.src='{{ url_for("static", filename="avatars/default.jpg") }}'">
-        <div>
-            <div>当前用户：<span class="username-label">{{ user_info.username }}</span></div>
-        </div>
-    </div>
+        <!-- 3D背景 -->
+        <canvas id="bg"></canvas>
 
-        <!-- 消息提示区域 -->
-        <div id="messageArea"></div>
-
-        <!-- 上传头像 -->
-        <div class="form-section">
-            <h4>更换头像</h4>
-            <form id="avatarForm" enctype="multipart/form-data">
-                <input type="hidden" name="username" value="{{ user_info.username }}">
-                <div class="mb-3">
-                    <label class="form-label">选择头像</label>
-                    <input type="file" class="form-control" name="avatar" accept="image/jpeg, image/png" required>
+        <!-- 主要内容 -->
+        <main class="dashboard">
+            <!-- 用户信息卡片 -->
+            <section class="user-card" data-tilt>
+                <div class="profile-image">
+                    <div class="image-container">
+                        <img src="{{ user_info.avatar or '/static/avatars/default.jpg' }}" alt="用户头像" id="current-avatar">
+                        <div class="image-overlay">
+                            <label for="avatar-upload" class="upload-btn">
+                                <span class="btn-text">更换头像</span>
+                                <input type="file" id="avatar-upload" accept="image/*" hidden>
+                            </label>
+                            <div class="upload-loader hidden">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-status">
+                        <div class="status-ring"></div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">上传头像</button>
-            </form>
-        </div>
-
-        <!-- 修改用户名 -->
-        <div class="form-section">
-            <h4>修改用户名</h4>
-            <form id="usernameForm">
-                <input type="hidden" name="old_username" value="{{ user_info.username }}">
-                <div class="mb-3">
-                    <label class="form-label">新用户名</label>
-                    <input type="text" class="form-control" name="new_username" required>
+                <div class="user-info">
+                    <div class="username-container">
+                        <h2 id="current-username">{{ user_info.username }}</h2>
+                        <button class="edit-btn" id="edit-username">
+                            <span class="btn-icon">✏️</span>
+                        </button>
+                    </div>
+                    <div class="logout" style="float: left">
+                        <button class="confirm-btn" onclick="window.location.href='/logout'">退出登录</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-warning">修改用户名</button>
-            </form>
-        </div>
+            </section>
 
-        <!-- 修改密码 -->
-        <div class="form-section">
-            <h4>修改密码</h4>
-            <form id="passwordForm">
-                <input type="hidden" name="username" value="{{ user_info.username }}">
-                <div class="mb-3">
-                    <label class="form-label">新密码</label>
-                    <input type="password" class="form-control" name="new_password" required>
+            <!-- 设置面板 -->
+            <section class="settings-panel">
+                <div class="panel-content">
+                    <!-- 用户名修改 -->
+                    <div class="setting-item username-edit hidden">
+                        <div class="input-group">
+                            <input type="hidden" name="old_username" value="{{ user_info.username }}">
+                            <input type="text" id="username-input" placeholder="输入新用户名">
+                            <div class="input-buttons">
+                                <button class="confirm-btn" id="confirm-username">确认</button>
+                                <button class="cancel-btn" id="cancel-username">取消</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 密码修改 -->
+                    <div class="setting-item password-change">
+                        <h3>修改密码</h3>
+                        <div class="input-group">
+                            <div class="password-field">
+                                <input type="password" id="new-password" placeholder="输入新密码">
+                                <button class="toggle-password">👁️</button>
+                            </div>
+                            <button class="change-btn" id="change-password">修改密码</button>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-danger">修改密码</button>
-            </form>
-        </div>
-    </div>
+            </section>
 
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-         // 增强版消息提示（支持自动消失）
-    function showMessage(type, text, duration=3000) {
-        const messageArea = document.getElementById('messageArea');
-        const alert = document.createElement('div');
-        alert.className = `alert alert-${type} alert-dismissible fade show`;
-        alert.setAttribute('role', 'alert');
-        alert.innerHTML = `
-            <div class="d-flex align-items-center">
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" fill="${type === 'success' ? '#28a745' : '#dc3545'}">
-                    ${type === 'success' ?
-                    '<use xlink:href="#check-circle-fill"/>' :
-                    '<use xlink:href="#exclamation-triangle-fill"/>'}
-                </svg>
-                <span>${text}</span>
+            <!-- 悬浮操作按钮 -->
+            <div class="floating-actions">
+                <button class="action-btn" onclick="window.location.href='/index'">
+                    <span class="btn-icon">🔙</span>
+                    <span class="btn-label">返回主页</span>
+                </button>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
+        </main>
+    </div>
 
-        messageArea.prepend(alert);
+    <!-- 通知系统 -->
+    <div class="notification-container" id="notification-container"></div>
 
-        // 自动消失
-        if (duration > 0) {
-            setTimeout(() => {
-                alert.remove();
-            }, duration);
-        }
+    <script src="../static/js/dash_script.js"></script>
+    <script>
+    document.getElementById('avatar-upload').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const container = document.querySelector('.image-container');
+    const loader = container.querySelector('.upload-loader');
+    const imgElement = document.getElementById('current-avatar');
+
+    try {
+        loader.classList.remove('hidden');
+        container.classList.add('uploading');
+        showNotification("提交中...");
+        const response = await fetch('/api/uploadAvatar', {
+        method: 'POST',
+        body: (() => {
+            const formData = new FormData();
+            formData.append('avatar', file);
+            formData.append('username', document.getElementById('current-username').innerText);
+            return formData;
+            })(),
+        credentials: 'include'
+        });
+
+        const result = await response.json();
+        imgElement.src = result.avatar_url;
+        showNotification('头像更新成功', 'success');
+
+    } finally {
+        loader.classList.add('hidden');
+        container.classList.remove('uploading');
+        e.target.value = '';
     }
+});
+    document.getElementById('confirm-username').addEventListener('click', async function() {
+        showNotification("提交中...");
+        const response = await fetch('/api/changeUsername', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            old_username: '{{ user_info.username }}',
+            new_username: document.getElementById('username-input').value
+            }),
+            credentials: 'include'
+        });
 
-    // 操作按钮状态管理
-    function setButtonState(button, isDisabled, text='') {
-        button.disabled = isDisabled;
-        if (text) button.innerHTML = text;
-    }
+        const data = await response.json();
+        showNotification(data.message);
+        document.getElementById('current-username').innerText = document.getElementById('username-input').value;
 
-    // SVG 图标定义（放在 body 最前面）
-    document.body.insertAdjacentHTML('afterbegin', `
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <symbol id="check-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-            </symbol>
-            <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            </symbol>
-        </svg>
-    `);
-
-        // 头像上传
-        document.getElementById('avatarForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-
-            try {
-                const response = await fetch('/api/uploadAvatar', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.redirected) {
-                showMessage('success', '头像更新成功！页面即将刷新...', 1500);
-                setTimeout(() => window.location.reload(), 1500);
-            } else if (response.ok) {
-                showMessage('success', '头像更新成功！', 3000);
-            } else {
-                const error = await response.json();
-                showMessage('danger', `上传失败：${error.message}`);
-            }
-        } catch (error) {
-            showMessage('danger', '网络错误：无法连接服务器');
-        } finally {
-            setButtonState(button, false, '上传头像');
-        }
     });
-
-        // 修改用户名
-        document.getElementById('usernameForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                username: e.target.old_username.value, // 从隐藏字段获取原用户名
-                new_username: e.target.new_username.value
-            };
-
-            try {
-                const response = await fetch('/api/changeUsername', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                     showMessage('success', '用户名修改成功！即将跳转登录...', 2000);
-                setTimeout(() => {
-                    window.location.href = '/logout'; // 需要重新登录
-                }, 2000);
-                } else {
-                    const error = await response.json();
-                    showMessage('danger', error.message);
-                }
-            } catch (error) {
-                showMessage('danger', '请求失败');
-            }
+    document.getElementById('change-password').addEventListener('click', async function() {
+        showNotification("提交中...");
+        const response = await fetch('/api/changePassword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            username: document.getElementById('current-username').innerText,
+            new_password: document.getElementById('new-password').value
+            }),
+            credentials: 'include'
         });
 
-        // 修改密码
-        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                username: e.target.username.value,
-                new_password: e.target.new_password.value
-            };
+        const data = await response.json();
+        showNotification(data.message);
 
-            try {
-                const response = await fetch('/api/changePassword', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
 
-                if (response.ok) {
-                    showMessage('success', '密码已更新！', 3000);
-                    setTimeout(() => {
-                    window.location.href = '/logout'; // 需要重新登录
-                }, 2000);
-                } else {
-                    const error = await response.json();
-                    showMessage('danger', error.message);
-                }
-            } catch (error) {
-                showMessage('danger', '请求失败');
-            }
-        });
+    });
     </script>
 </body>
 </html>

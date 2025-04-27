@@ -115,7 +115,6 @@ nav ul li a[aria-current="page"] {
 
 /* 标题区域优化 */
 .site-title {
-    background-color: var(--gray-800);
     color: var(--white);
     text-align: center;
     height: 100vh;
@@ -128,6 +127,23 @@ nav ul li a[aria-current="page"] {
     transition: opacity 1.5s ease;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+#vanta-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.site-title h1 {
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #1e293b;
 }
 
 .site-title.visible {

@@ -65,7 +65,7 @@ async def register():
         if Users.query.filter_by(username=form.username.data).first():
             flash('用户名已存在')
             return redirect(url_for('register'))
-        user = Users(username=form.username.data, password=form.password.data, avatar='default.jpg')
+        user = Users(username=form.username.data, password=form.password.data, avatar='/static/avatars/default.jpg')
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -86,7 +86,6 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    print(current_user.username)
     user=db.session.query(Users).filter_by(username=current_user.username).first()
     avatar = user.avatar
     user_info = {

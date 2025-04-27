@@ -52,7 +52,8 @@ def article_detail(news_id):
         'news_detail_page.html',
         article=article,
         comments=comments_pagination.items,
-        pagination=comments_pagination
+        pagination=comments_pagination,
+        news_id=news_id
     )
 
 
