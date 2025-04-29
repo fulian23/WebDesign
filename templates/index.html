@@ -23,6 +23,7 @@
 
     <!-- 网站标题 -->
     <header class="site-title" role="banner">
+        <div id="vanta-background"></div>
         <h1>中国互联网大会</h1>
     </header>
 
@@ -35,14 +36,14 @@
     </div>
 
     <!-- 导航栏 -->
-    <nav class="navbar text-white py-4" role="navigation" aria-label="主导航">
+    <nav class="text-white py-4" role="navigation" aria-label="主导航">
         <div class="container mx-auto flex justify-center items-center">
             <ul class="flex" role="menubar">
                 <li role="none"><a href="#" class="hover:text-gray-200" role="menuitem" aria-current="page">主页</a></li>
                 <li role="none"><a href="/study_cases" class="hover:text-gray-200" role="menuitem">优秀案例</a></li>
                 <li role="none"><a href="/history" class="hover:text-gray-200" role="menuitem">时间历程</a></li>
                 <li role="none"><a href="/news" class="hover:text-gray-200" role="menuitem">大会新闻</a></li>
-                <li role="none"><a href="/dashboard" class="hover:text-gray-200" role="menuitem">个人中心</a></li>
+                <li role="none"><a href="/dashboard" class="hover:text-gray-200" role="menuitem">用户</a></li>
             </ul>
         </div>
     </nav>
@@ -318,6 +319,35 @@
     </footer>
 
     <!-- 异步加载脚本 -->
-    <script src="../static/js/script.js" defer></script>
+    <script src="/static/js/script.js" defer></script>
+    <script src="/static/js/three.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+        // 初始化Vanta.js动画
+        document.addEventListener('DOMContentLoaded', function() {
+            VANTA.NET({
+                el: "#vanta-background",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x0,
+                backgroundColor: 0xffffff,
+                points: 15.00,
+                maxDistance: 12.00,
+                spacing: 10.00,
+                showLines: true,
+                lineColor: 0x3b82f6,
+                lineWidth: 1.00,
+                speed: 2.00,
+                size: 1.00,
+                damping: 0.85,
+                forceAnimate: true
+            });
+        });
+    </script>
 </body>
 </html> 

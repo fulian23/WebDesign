@@ -10,10 +10,8 @@ news = Blueprint('news', __name__, url_prefix='/news')
 
 @news.route('/search')
 def search_articles():
-    # 获取搜索关键词（重要：需做输入过滤）
+    #前端没来得及做，先保留功能
     keyword = request.args.get('q', '').strip()
-
-    # 基本参数校验
     if not keyword:
         return render_template('search.html', error="请输入搜索关键词")
 
@@ -22,7 +20,6 @@ def search_articles():
         Articles.title.ilike(search_pattern)
     ).order_by(Articles.timestamp.desc())
 
-    # 分页处理
     page = request.args.get('page', 1, type=int)
     pagination = query.paginate(page=page, per_page=2)
     return render_template('search.html',

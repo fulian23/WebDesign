@@ -1,8 +1,6 @@
-import requests
-from urllib import parse
 from flask import Flask, render_template, redirect, url_for, flash, request, Response
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask_wtf.csrf import CSRFProtect
+
 from app import routes
 from app import apis
 
@@ -15,9 +13,9 @@ from app.forms import LoginForm, RegisterForm
 
 
 app = Flask(__name__)
-app.secret_key = 'db_test.py'
+app.secret_key = 'Y0u_N3V3R_kn0W'
 
-# csrf = CSRFProtect(app)
+
 app.register_blueprint(routes.news)
 app.register_blueprint(apis.api)
 
